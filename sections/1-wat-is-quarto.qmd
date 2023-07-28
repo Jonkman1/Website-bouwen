@@ -1,0 +1,22 @@
+---
+format: html
+---
+
+## 1. Wat is <img src="media/quarto.png" alt="A blue circle divided into four quadrants, followed by the name &apos;quarto&apos;." style="display: inline-block; margin: 0; position: relative; top: 0px; width:110px;height:30px;"/> ?
+
+[Quarto](https://quarto.org/) is een publicatiesysteem gebouwd op  Pandoc dat gebruikers in staat stelt dynamische inhoud te creëren met gebruik van R, Python, Julia en ObservableJS (met plannen om daar ook nog andere talen aan toe te voegen!).
+
+R gebruikers zijn al lang gek op [RMarkdown](https://rmarkdown.rstudio.com/) voor het combineren van tekst, code en outputs in enkel samengestelde ("geknitte") documenten. Quarto breidt alle beste functies van RMarkdown (plus nog veel meer!) uit naar extra talen.
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| fig-alt: "Een schema dat de meertalige input representeert (b.v. Python, R, Observable, Julia) naar meervoudige output (b.v. PDF, html, Word documents, and more) en de veelzijdigheid van Quarto laat zien."
+#knitr::include_graphics("media/quarto_schematic.png")
+```
+
+::: column-margin
+`r fontawesome::fa("palette", fill = "#5A5A5A", a11y = "sem")` Ontwerpt van [Allison Horst](https://twitter.com/allison_horst). Bekijk ook de rest van Allison's serieus en aardige Quarto pinguin ontwerpen in de #rstudioconf2022 keynote, [Hallo Quarto](https://mine.quarto.pub/hello-quarto/#/hello-quarto-title), van [Julie Lowndes](https://twitter.com/juliesquid) & [Mine Çetinkaya-Rundel](https://twitter.com/minebocek)!
+:::
+
+Je kunt [Quarto's documentatie](https://quarto.org/docs/guide/) verder onderzoeke om meer te leren over het maken van documenten, websites, blogs, boeken, presentaties, etc.

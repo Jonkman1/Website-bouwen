@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Sam Csik, bewerking Harrie Jonkman">
+<meta name="dcterms.date" content="2023-08-05">
+
+<title>Eigen website maken met Quarto</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/quarto.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="index_files/libs/quarto-html/anchor.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="index_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="index_files/libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="index_files/libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#inleiding" id="toc-inleiding" class="nav-link active" data-scroll-target="#inleiding">0. Inleiding</a></li>
+  <li><a href="#wat-is" id="toc-wat-is" class="nav-link" data-scroll-target="#wat-is">1. Wat is <img src="media/quarto.png" alt="A blue circle divided into four quadrants, followed by the name 'quarto'." style="display: inline-block; margin: 0; position: relative; top: 0px; width:110px;height:30px;"> ?</a></li>
+  <li><a href="#heb-ik-quarto-nodig-om-mijn-website-te-bouwen" id="toc-heb-ik-quarto-nodig-om-mijn-website-te-bouwen" class="nav-link" data-scroll-target="#heb-ik-quarto-nodig-om-mijn-website-te-bouwen">2. Heb ik Quarto <em>nodig</em> om mijn website te bouwen?</a></li>
+  <li><a href="#basis-leggen-voor-jouw-website" id="toc-basis-leggen-voor-jouw-website" class="nav-link" data-scroll-target="#basis-leggen-voor-jouw-website"><svg aria-label="Screwdriver Wrench" role="img" viewbox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>Screwdriver Wrench</title><path d="M78.6 5C69.1-2.4 55.6-1.5 47 7L7 47c-8.5 8.5-9.4 22-2.1 31.6l80 104c4.5 5.9 11.6 9.4 19 9.4h54.1l109 109c-14.7 29-10 65.4 14.3 89.6l112 112c12.5 12.5 32.8 12.5 45.3 0l64-64c12.5-12.5 12.5-32.8 0-45.3l-112-112c-24.2-24.2-60.6-29-89.6-14.3l-109-109V104c0-7.5-3.5-14.5-9.4-19L78.6 5zM19.9 396.1C7.2 408.8 0 426.1 0 444.1C0 481.6 30.4 512 67.9 512c18 0 35.3-7.2 48-19.9L233.7 374.3c-7.8-20.9-9-43.6-3.6-65.1l-61.7-61.7L19.9 396.1zM512 144c0-10.5-1.1-20.7-3.2-30.5c-2.4-11.2-16.1-14.1-24.2-6l-63.9 63.9c-3 3-7.1 4.7-11.3 4.7H352c-8.8 0-16-7.2-16-16V102.6c0-4.2 1.7-8.3 4.7-11.3l63.9-63.9c8.1-8.1 5.2-21.8-6-24.2C388.7 1.1 378.5 0 368 0C288.5 0 224 64.5 224 144l0 .8 85.3 85.3c36-9.1 75.8 .5 104 28.7L429 274.5c49-23 83-72.8 83-130.5zM56 432a24 24 0 1 1 48 0 24 24 0 1 1 -48 0z"></path></svg> 3. Basis leggen voor jouw website</a></li>
+  <li><a href="#via-de-commandolijn" id="toc-via-de-commandolijn" class="nav-link" data-scroll-target="#via-de-commandolijn"><strong><svg aria-label="Terminal" role="img" viewbox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>Terminal</title><path d="M9.4 86.6C-3.1 74.1-3.1 53.9 9.4 41.4s32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 9.4 86.6zM256 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32s14.3-32 32-32z"></path></svg> Via de commandolijn</strong></a></li>
+  <li><a href="#jouw-site-bouwen-publiceren-met-github-pages" id="toc-jouw-site-bouwen-publiceren-met-github-pages" class="nav-link" data-scroll-target="#jouw-site-bouwen-publiceren-met-github-pages"><svg aria-label="GitHub" role="img" viewbox="0 0 496 512" style="height:1em;width:0.97em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>GitHub</title><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg> Jouw site bouwen &amp; publiceren met GitHub Pages</a></li>
+  <li><a href="#waar-moet-ik-beginnen-om-zaken-te-veranderen" id="toc-waar-moet-ik-beginnen-om-zaken-te-veranderen" class="nav-link" data-scroll-target="#waar-moet-ik-beginnen-om-zaken-te-veranderen"><svg aria-label="Pen To Square" role="img" viewbox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>Pen To Square</title><path d="M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1 377.9 88 407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9 390.1 168 255.8 302.2c-2.9 2.9-6.5 5-10.4 6.1l-58.5 16.7 16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25C446.8-3.1 401.2-3.1 373.1 25zM88 64C39.4 64 0 103.4 0 152V424c0 48.6 39.4 88 88 88H360c48.6 0 88-39.4 88-88V312c0-13.3-10.7-24-24-24s-24 10.7-24 24V424c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V152c0-22.1 17.9-40 40-40H200c13.3 0 24-10.7 24-24s-10.7-24-24-24H88z"></path></svg> Waar moet ik beginnen om zaken te veranderen?</a></li>
+  <li><a href="#fa-arrow-right-titlean-arrow-pointing-to-the-right-verander-het-thema" id="toc-fa-arrow-right-titlean-arrow-pointing-to-the-right-verander-het-thema" class="nav-link" data-scroll-target="#fa-arrow-right-titlean-arrow-pointing-to-the-right-verander-het-thema"><i class="fa-solid fa-arrow-right" title="An arrow pointing to the right" aria-hidden="true"></i> <strong>Verander het thema</strong></a></li>
+  <li><a href="#vooruit-kijken" id="toc-vooruit-kijken" class="nav-link" data-scroll-target="#vooruit-kijken"><svg aria-label="Forward" role="img" viewbox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>Forward</title><path d="M52.5 440.6c-9.5 7.9-22.8 9.7-34.1 4.4S0 428.4 0 416V96C0 83.6 7.2 72.3 18.4 67s24.5-3.6 34.1 4.4L224 214.3V256v41.7L52.5 440.6zM256 352V256 128 96c0-12.4 7.2-23.7 18.4-29s24.5-3.6 34.1 4.4l192 160c7.3 6.1 11.5 15.1 11.5 24.6s-4.2 18.5-11.5 24.6l-192 160c-9.5 7.9-22.8 9.7-34.1 4.4s-18.4-16.6-18.4-29V352z"></path></svg> Vooruit kijken</a></li>
+  <li><a href="#extra-bronnen-om-je-enthousiast-te-maken-over-quarto" id="toc-extra-bronnen-om-je-enthousiast-te-maken-over-quarto" class="nav-link" data-scroll-target="#extra-bronnen-om-je-enthousiast-te-maken-over-quarto"><svg aria-label="Star" role="img" viewbox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>Star</title><path d="M287.9 0c9.2 0 17.6 5.2 21.6 13.5l68.6 141.3 153.2 22.6c9 1.3 16.5 7.6 19.3 16.3s.5 18.1-5.9 24.5L433.6 328.4l26.2 155.6c1.5 9-2.2 18.1-9.6 23.5s-17.3 6-25.3 1.7l-137-73.2L151 509.1c-8.1 4.3-17.9 3.7-25.3-1.7s-11.2-14.5-9.7-23.5l26.2-155.6L31.1 218.2c-6.5-6.4-8.7-15.9-5.9-24.5s10.3-14.9 19.3-16.3l153.2-22.6L266.3 13.5C270.4 5.2 278.7 0 287.9 0zm0 79L235.4 187.2c-3.5 7.1-10.2 12.1-18.1 13.3L99 217.9 184.9 303c5.5 5.5 8.1 13.3 6.8 21L171.4 443.7l105.2-56.2c7.1-3.8 15.6-3.8 22.6 0l105.2 56.2L384.2 324.1c-1.3-7.7 1.2-15.5 6.8-21l85.9-85.1L358.6 200.5c-7.8-1.2-14.6-6.1-18.1-13.3L287.9 79z"></path></svg> Extra bronnen om je enthousiast te maken over Quarto</a></li>
+  <li><a href="#met-dank-aan" id="toc-met-dank-aan" class="nav-link" data-scroll-target="#met-dank-aan"><svg aria-label="People Carry Box" role="img" viewbox="0 0 640 512" style="height:1em;width:1.25em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>People Carry Box</title><path d="M80 48a48 48 0 1 1 96 0A48 48 0 1 1 80 48zm64 193.7v65.1l51 51c7.1 7.1 11.8 16.2 13.4 26.1l15.2 90.9c2.9 17.4-8.9 33.9-26.3 36.8s-33.9-8.9-36.8-26.3l-14.3-85.9L66.8 320C54.8 308 48 291.7 48 274.7V186.6c0-32.4 26.2-58.6 58.6-58.6c24.1 0 46.5 12 59.9 32l47.4 71.1 10.1 5V160c0-17.7 14.3-32 32-32H384c17.7 0 32 14.3 32 32v76.2l10.1-5L473.5 160c13.3-20 35.8-32 59.9-32c32.4 0 58.6 26.2 58.6 58.6v88.1c0 17-6.7 33.3-18.7 45.3l-79.4 79.4-14.3 85.9c-2.9 17.4-19.4 29.2-36.8 26.3s-29.2-19.4-26.3-36.8l15.2-90.9c1.6-9.9 6.3-19 13.4-26.1l51-51V241.7l-19 28.5c-4.6 7-11 12.6-18.5 16.3l-59.6 29.8c-2.4 1.3-4.9 2.2-7.6 2.8c-2.6 .6-5.3 .9-7.9 .8H256.7c-2.5 .1-5-.2-7.5-.7c-2.9-.6-5.6-1.6-8.1-3l-59.5-29.8c-7.5-3.7-13.8-9.4-18.5-16.3l-19-28.5zM2.3 468.1L50.1 348.6l49.2 49.2-37.6 94c-6.6 16.4-25.2 24.4-41.6 17.8S-4.3 484.5 2.3 468.1zM512 0a48 48 0 1 1 0 96 48 48 0 1 1 0-96zm77.9 348.6l47.8 119.5c6.6 16.4-1.4 35-17.8 41.6s-35-1.4-41.6-17.8l-37.6-94 49.2-49.2z"></path></svg> Met dank aan</a></li>
+  <li><a href="#bijdrage" id="toc-bijdrage" class="nav-link" data-scroll-target="#bijdrage"><svg aria-label="Code Pull Request" role="img" viewbox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>Code Pull Request</title><path d="M305.8 2.1C314.4 5.9 320 14.5 320 24V64h16c70.7 0 128 57.3 128 128V358.7c28.3 12.3 48 40.5 48 73.3c0 44.2-35.8 80-80 80s-80-35.8-80-80c0-32.8 19.7-61 48-73.3V192c0-35.3-28.7-64-64-64H320v40c0 9.5-5.6 18.1-14.2 21.9s-18.8 2.3-25.8-4.1l-80-72c-5.1-4.6-7.9-11-7.9-17.8s2.9-13.3 7.9-17.8l80-72c7-6.3 17.2-7.9 25.8-4.1zM104 80A24 24 0 1 0 56 80a24 24 0 1 0 48 0zm8 73.3V358.7c28.3 12.3 48 40.5 48 73.3c0 44.2-35.8 80-80 80s-80-35.8-80-80c0-32.8 19.7-61 48-73.3V153.3C19.7 141 0 112.8 0 80C0 35.8 35.8 0 80 0s80 35.8 80 80c0 32.8-19.7 61-48 73.3zM104 432a24 24 0 1 0 -48 0 24 24 0 1 0 48 0zm328 24a24 24 0 1 0 0-48 24 24 0 1 0 0 48z"></path></svg> Bijdrage</a></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</div>
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Eigen website maken met Quarto</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Sam Csik, bewerking Harrie Jonkman </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 5, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="inleiding" class="level2">
+<h2 class="anchored" data-anchor-id="inleiding">0. Inleiding</h2>
+<p>xxx</p>
+</section>
+<section id="wat-is" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="wat-is">1. Wat is <img src="media/quarto.png" alt="A blue circle divided into four quadrants, followed by the name 'quarto'." style="display: inline-block; margin: 0; position: relative; top: 0px; width:110px;height:30px;"> ?</h2>
+<p><a href="https://quarto.org/">Quarto</a> is een publicatiesysteem gebouwd op Pandoc dat gebruikers in staat stelt dynamische inhoud te creëren met gebruik van R, Python, Julia en ObservableJS (met plannen om daar ook nog andere talen aan toe te voegen!).</p>
+<p>R gebruikers zijn al lang gek op <a href="https://rmarkdown.rstudio.com/">RMarkdown</a> voor het combineren van tekst, code en outputs in enkel samengestelde (“geknitte”) documenten. Quarto breidt alle beste functies van RMarkdown (plus nog veel meer!) uit naar extra talen.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><svg aria-label="Palette" role="img" viewbox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>Palette</title><path d="M512 256c0 .9 0 1.8 0 2.7c-.4 36.5-33.6 61.3-70.1 61.3H344c-26.5 0-48 21.5-48 48c0 3.4 .4 6.7 1 9.9c2.1 10.2 6.5 20 10.8 29.9c6.1 13.8 12.1 27.5 12.1 42c0 31.8-21.6 60.7-53.4 62c-3.5 .1-7 .2-10.6 .2C114.6 512 0 397.4 0 256S114.6 0 256 0S512 114.6 512 256zM128 288a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm0-96a32 32 0 1 0 0-64 32 32 0 1 0 0 64zM288 96a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm96 96a32 32 0 1 0 0-64 32 32 0 1 0 0 64z"></path></svg> Ontwerpt van <a href="https://twitter.com/allison_horst">Allison Horst</a>. Bekijk ook de rest van Allison’s serieus en aardige Quarto pinguin ontwerpen in de #rstudioconf2022 keynote, <a href="https://mine.quarto.pub/hello-quarto/#/hello-quarto-title">Hallo Quarto</a>, van <a href="https://twitter.com/juliesquid">Julie Lowndes</a> &amp; <a href="https://twitter.com/minebocek">Mine Çetinkaya-Rundel</a>!</p>
+</div></div><p>Je kunt <a href="https://quarto.org/docs/guide/">Quarto’s documentatie</a> verder onderzoeke om meer te leren over het maken van documenten, websites, blogs, boeken, presentaties, etc.</p>
+</section>
+<section id="heb-ik-quarto-nodig-om-mijn-website-te-bouwen" class="level2">
+<h2 class="anchored" data-anchor-id="heb-ik-quarto-nodig-om-mijn-website-te-bouwen">2. Heb ik Quarto <em>nodig</em> om mijn website te bouwen?</h2>
+<p>Welnee! Er zijn enkele R-gereedschappen die het maken van websites en blog tot plezier en makkelijke maken, waaronder de nog steeds breed gebruikte <a href="https://bookdown.org/yihui/blogdown/"><code>{blogdown}</code></a> en <a href="https://rstudio.github.io/distill/website.html"><code>{distill}</code></a> pakketten.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/blogdown_distill.png" class="img-fluid figure-img" width="521"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Een alternatief is natuurlijk dat je helemaal niet met R werkt en hele mooie sites met HTML templates (probeer <a href="https://rpubs.com/alatleephillips/science-website-tutorial">deze handleiding</a> van het NCEAS’ Science Communication and Policy Officer, <a href="https://www.alexandraatleephillips.com/">Alex Phillips</a>) of een variëteit variety van <a href="https://jamstack.org/generators/?utm_source=blog&amp;utm_medium=about-ssgs-pnh&amp;utm_campaign=devex">statische site generatoren</a> (b.v. <a href="https://gohugo.io/">Hugo</a>, <a href="https://jekyllrb.com/">Jekyll</a>).</p>
+<p>Hoewel nog steeds betrekkelijk nieuw, Quarto heeft een gemeenschap van datawetenschappers (vooral op Twitter) – het is veelzijdig, gebruiksvriendelijk en ziet er geweldig uit (terwijl het nog steeds kan worden aangepast)..</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Via Twitter blijf je goed op de hoogte van het Quarto (en dat wat ermee samenhangt <a href="https://twitter.com/search?q=%23rstats&amp;src=typed_query">#rstats</a>) nieuws.
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Volg <a href="https://twitter.com/quarto_pub">@quarto_pub</a> en kijk naar <a href="https://mine-cr.com/">Mine Çentinkaya-Rundel</a>’s #quartotip tweets, die zijn verzameld en gepubliceerd als blog posts op <a href="https://mine-cetinkaya-rundel.github.io/quarto-tip-a-day/about.html">A Quarto tip a day keeps the docs away</a> website.</p>
+</div>
+</div>
+</section>
+<section id="basis-leggen-voor-jouw-website" class="level2">
+<h2 class="anchored" data-anchor-id="basis-leggen-voor-jouw-website"><svg aria-label="Screwdriver Wrench" role="img" viewbox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>Screwdriver Wrench</title><path d="M78.6 5C69.1-2.4 55.6-1.5 47 7L7 47c-8.5 8.5-9.4 22-2.1 31.6l80 104c4.5 5.9 11.6 9.4 19 9.4h54.1l109 109c-14.7 29-10 65.4 14.3 89.6l112 112c12.5 12.5 32.8 12.5 45.3 0l64-64c12.5-12.5 12.5-32.8 0-45.3l-112-112c-24.2-24.2-60.6-29-89.6-14.3l-109-109V104c0-7.5-3.5-14.5-9.4-19L78.6 5zM19.9 396.1C7.2 408.8 0 426.1 0 444.1C0 481.6 30.4 512 67.9 512c18 0 35.3-7.2 48-19.9L233.7 374.3c-7.8-20.9-9-43.6-3.6-65.1l-61.7-61.7L19.9 396.1zM512 144c0-10.5-1.1-20.7-3.2-30.5c-2.4-11.2-16.1-14.1-24.2-6l-63.9 63.9c-3 3-7.1 4.7-11.3 4.7H352c-8.8 0-16-7.2-16-16V102.6c0-4.2 1.7-8.3 4.7-11.3l63.9-63.9c8.1-8.1 5.2-21.8-6-24.2C388.7 1.1 378.5 0 368 0C288.5 0 224 64.5 224 144l0 .8 85.3 85.3c36-9.1 75.8 .5 104 28.7L429 274.5c49-23 83-72.8 83-130.5zM56 432a24 24 0 1 1 48 0 24 24 0 1 1 -48 0z"></path></svg> 3. Basis leggen voor jouw website</h2>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Voordat je begint…
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Om verder te gaan, is het volgende nodig:</p>
+<ul>
+<li>R &amp; RStudio zijn geïnstalleerd (de laatste RStudio update vind je <a href="https://www.rstudio.com/products/rstudio/download/#download">hier</a>)</li>
+<li><a href="https://quarto.org/docs/get-started/">Quarto</a> is geïnstalleerd – <strong>Vanaf RStudio v2022.07.1+ i.e.&nbsp;zit Quatro er automatisch in, geen aparte download is meer nodig</strong></li>
+<li>Een GitHub-account &amp; jouw ‘personal access token’ (PAT) is opgeslagen</li>
+<li>Git is geïnstalleerd/geconfigureerd</li>
+</ul>
+</div>
+</div>
+<p>Dit document bespreekt twee manieren waar Quarto is te gebruiken om jouw website te bouwen.</p>
+<ol type="1">
+<li><svg aria-label="Terminal" role="img" viewbox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>Terminal</title><path d="M9.4 86.6C-3.1 74.1-3.1 53.9 9.4 41.4s32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 9.4 86.6zM256 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32s14.3-32 32-32z"></path></svg> Via de commandolijn<br>
+</li>
+<li><svg aria-label="R Project" role="img" viewbox="0 0 581 512" style="height:1em;width:1.13em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>R Project</title><path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"></path></svg> Met gebruik van RStudio IDE</li>
+</ol>
+<p>De volgorde van handeling is net wat anders afhankelijk van de benadering die je kiest, maar de concepten blijven hetzelfde.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"></ul>
+<div class="tab-content">
+
+</div>
+</div>
+</section>
+<section id="via-de-commandolijn" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="via-de-commandolijn"><strong><svg aria-label="Terminal" role="img" viewbox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>Terminal</title><path d="M9.4 86.6C-3.1 74.1-3.1 53.9 9.4 41.4s32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 9.4 86.6zM256 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32s14.3-32 32-32z"></path></svg> Via de commandolijn</strong></h2>
+<section id="waarom-de-commando-lijn-gebruiken-om-jouw-website-op-te-zetten" class="level3">
+<h3 class="anchored" data-anchor-id="waarom-de-commando-lijn-gebruiken-om-jouw-website-op-te-zetten"><strong>4. Waarom de commando lijn gebruiken om jouw website op te zetten?</strong></h3>
+<ul>
+<li>Je raakt meer vertrouwd met het werken in een commandoregelinterface (CLI).<br>
+</li>
+<li>Je kunt met Quarto werken via commando’s, ongeacht de taal (R, Python, Julia, ObservableJS) of IDE (<strong>I</strong>ntegrated <strong>D</strong>evelopment <strong>E</strong>nvironment) waarmee je werkt</li>
+</ul>
+</section>
+<section id="stappen" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="stappen"><strong>Stappen:</strong></h3>
+<ol type="1">
+<li>Open jouw terminal.<br>
+</li>
+<li>Bepaal waar jij je bevindt in jouw bestandssysteem met het commando <code>pwd</code> (print working directory). Gebruik <code>cd</code> (change directory) om door je bestandssysteem te navigeren naar de plek waar je je project wilt hebben</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Organiseer R projecten / git repositories
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Er zijn heel veel opinies over how jij jouw R projecten/git repositories moet organiseren op jouw computer. Ik bewaar persoonlijk die van mij in een folder <code>git</code> in mijn thuismap (b.v. <code>Users/samanthacsik/git/</code>) zodat alles zich op een een plaats bevindt.</p>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Gebruik de volgende commando’s om een quarto website project te bouwen in een directory dat de benodigde files bevat voor die website:</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Directory == Folder == Map
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In dit document gebruik ik de woorden <strong>directory</strong>, <strong>folder</strong> en <strong>map</strong> door elkaar.</p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> create-project mysite <span class="at">--type</span> website </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Noem jouw websiteproject <strong>jouwgebruikersnaam.github.io</strong> als je het wilt verspreiden met GitHub pages
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Omdat we GitHub pages gebruiken om onze websites te publiceren/hosten, wordt het aangeraden dat jij jouw project <strong>jouwgebruikersnaam.github.io</strong> noemt (je kunt <strong>één</strong> user website met de <strong>github.io</strong> suffix gebruiken) – bij voorbeeld, <a href="https://github.com/samanthacsik/samanthacsik.github.io">het project/GitHub repository</a>, die de code bevat voor <a href="https://samanthacsik.github.io/">mijn persoonlijke website</a>, heeft de naam <strong>samanthacsik.github.io</strong>. Anders, geef het een redelijke naam (dit zal de <a href="https://developer.mozilla.org/en-US/docs/Glossary/Slug">slug</a> worden voor jouw site als je het publiceert met GitHub pages, dus kies het zorgvuldig). Ik kies voor mijn project de naam <strong>mysite</strong> <em>alleen vanwege pedagogische redenen</em> – jij moet die van jou zeker een meer practische/creatieve naam geven.</p>
+</div>
+</div>
+<div class="cell column-page quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/pwd_cd.png" class="img-fluid figure-img" width="780"></p>
+<figcaption class="figure-caption">Gebruik <code>pwd</code> om jouw huidige werkmap te zien. Gebruik <code>cd</code> om de directorie te veranderen.</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/CLI_create_website.png" class="img-fluid figure-img" width="780"></p>
+<figcaption class="figure-caption">Creëer een nieuw quarto project met <code>quarto create-project your_project_name --type website</code> commando’s.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>Als jij <code>cd</code> in jouw nieuwe <code>mysite</code> directory plaatst (of hoe jij je quarto project ook genoemd hebt) en het <code>ls</code> commando gebruikt om de inhoud van die directory op te vragen, zou je een serie bestanden moeten zien (<code>_quarto.yml</code>, <code>about.qmd</code>, <code>index.qmd</code>, <code>styles.css</code>) die de basis voor jouw website vormen. Bijvoorbeeld:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print current working directory</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">base</span><span class="kw">)</span> <span class="ex">Samanthas-MacBook-Air:git</span> samanthacsik$ pwd </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">/Users/samanthacsik/git</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># move into `mysite` directory</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">base</span><span class="kw">)</span> <span class="ex">Samanthas-MacBook-Air:git</span> samanthacsik$ cd mysite/ </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">base</span><span class="kw">)</span> <span class="ex">Samanthas-MacBook-Air:mysite</span> samanthacsik$ </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># list out all files in the `mysite` directory</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">base</span><span class="kw">)</span> <span class="ex">Samanthas-MacBook-Air:mysite</span> samanthacsik$ ls</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="ex">_quarto.yml</span> _site       about.qmd   index.qmd   styles.css</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Je kunt ook Finder (Mac) of Windows Explorer (Windows) gebruiken om jouw nieuwe directorie en bestanden te zien.</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="media/mysite_finder.png" class="img-fluid" width="945"></p>
+</div>
+</div>
+<ol start="4" type="1">
+<li>Je kunt een voorbeeld van je eenvoudige, maar functionele website rechtstreeks vanaf de terminal bekijken door het volgende te typen:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview mysite</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>De voorvertoning van je site wordt nu geopend in je browser. Verlaat de preview door <code>control</code> + <code>C</code> op te geven.</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Je moet het pad naar jouw websitemap opgeven als je een voorbeeld wilt bekijken vanaf een andere locatie. Bijvoorbeeld, als mijn Quarto website directory op <code>User/samanthacsik/git/mysite</code> staat, maar ik ben één directory hoger in <code>User/samanthacsik/git</code>, dan kan ik <code>quarto preview mysite</code> uitvoeren. Als alternatief kan ik het volledige pad <code>quarto preview User/samanthacsik/git/mysite</code> of het relatieve pad quarto preview <code>~/git/mysite</code> geven, ongeacht in welke map ik me op dat moment bevind.</p>
+</div>
+</div>
+<ol start="5" type="1">
+<li>Tot nu toe heb je een map aangemaakt, maar die wordt nog niet gevolgd door git. Zorg er eerst voor dat je met <code>cd</code> de websitemap kiest. Vervolgens initialiseer je deze map als een git-repository met het <code>git init</code> commando in het terminal venster.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> init</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="6" type="1">
+<li>Laten we nu de naam van onze standaard branch controleren – dat is de branch waar alle wijzigingen uiteindelijk in worden samengevoegd (als je een website bouwt, is dit meestal de branch die je wilt implementeren). Typ <code>git status</code> in je Terminal venster. Je zou iets moeten zien dat hier op lijkt, waarbij de eerste regel je vertelt op welke branch je momenteel zit:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">base</span><span class="kw">)</span> <span class="ex">Samanthas-MacBook-Air:mysite</span> samanthacsik$ git status</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">On</span> branch master</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">No</span> commits yet</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Untracked</span> files:</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">(</span><span class="ex">use</span> <span class="st">"git add &lt;file&gt;..."</span> to include in what will be committed<span class="kw">)</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="ex">.quarto/</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">_quarto.yml</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">_site/</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="ex">about.qmd</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="ex">index.qmd</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="ex">styles.css</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="ex">nothing</span> added to commit but untracked files present <span class="er">(</span><span class="ex">use</span> <span class="st">"git add"</span> to track<span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>git status</code> is een super handig commando dat de status van jouw werkmap en staging gebied laat zien. Ik gebruik dit commando <em>vaak</em> als ik met de terminal werk om te controleren of ik echt ben waar ik denk dat ik ben en om de opgegeven, nog niet opgegeven of gewijzigde bestanden te zien. Het is een goede gewoonte om <code>git status</code> te draaien na het wisselen van branch of voor/na het toevoegen van bestanden om te committen.</p>
+</div>
+</div>
+<ul>
+<li><strong>Als jouw huidige branch <code>master</code> heet, volg dan stap 7 hieronder om de naam naar <code>main</code> te updaten.</strong> Waarom? De racistische “master” terminologie voor ‘git branches’ motiveert ons om de default branch naar “main” om te zetten. Als jouw branch al <code>main</code> heet, kun je rechtstreeks naar stap 8 gaan.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Als je eerst een repo in <em>GitHub eerst</em> hebt gemaakt, de standaard is nu geupdate om er de default branch <code>main</code> van te maken. Echter, als je <em>eerst een lokale git repository hebt gemaakt</em> (zoals we hier hebben gedaan) kan het zijn dat jij jouw default branch <code>main</code> hebt genoemd (afhankelijke van de Git-versie en de configuratie-settings die jij hebt).</p>
+</div>
+</div>
+<ol start="7" type="1">
+<li>Laten we onze standaard branch naam van <code>master</code> naar <code>main</code> overzetten. Kies jouw workflow gebaseerd op jouw Git versie (controleer jouw versie met <code>git --version</code> in jouw Terminal):</li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset page-columns page-full">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href=""><strong><svg aria-label="Git Alt" role="img" viewbox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>Git Alt</title><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg> Voor Git versie 2.28 of later</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href=""><strong><svg aria-label="Git Alt" role="img" viewbox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>Git Alt</title><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg> Voor oudere versies van Git</strong></a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href=""><strong><svg aria-label="R Project" role="img" viewbox="0 0 581 512" style="height:1em;width:1.13em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>R Project</title><path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"></path></svg> Met RStudio IDE</strong></a></li></ul>
+<div class="tab-content page-columns page-full">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<p>Je kunt de standaard branch bijwerken naar <code>main</code> door de volgende regel in het Terminalvenster in te tikken:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> init.defaultBranch main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong><em>Dit stelt de standaard branchnaam in op <code>main</code> voor alle nieuwe repositories die je aanmaakt (het hernoemt geen branches in bestaande projecten).</em></strong></p>
+<p>Je kunt controleren dat dit werkte door het <code>git status</code> commando opnieuw in te typen. De eerste afgedrukte regel zou nu <code>On branch main</code> moeten zijn.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Houd er rekening mee dat je werkproces voor het updaten van <code>master</code> naar <code>main</code> er anders uit zal zien als je al zowel een lokale git repo (eerst) EN een upstream remote i.e.&nbsp;GitHub repo (tweede) hebt gemaakt. Kijk naar <a href="https://gitbetter.substack.com/p/how-to-change-git-default-branch">deze post</a> voor meer info.</p>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<p>Hernoem de standaard branch <code>main</code> door de volgende regel in het Terminal venster uit te voeren:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">-m</span> master main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>De<code>-m</code> toevoeging wordt gebruikt om jouw branch te hernoemen zonder de branch geschiedenis te beïnvloeden.</p>
+<p><strong><em>Dit zet de default branch naam op <code>main</code> ALLEEN voor deze repository (dus je zult dit moeten doen met alle nieuwe lokale git repositories die je aanmaakt).</em></strong></p>
+<p>Je kunt controleren of dit werkt door het <code>git status</code> commando opnieuw in te typen. De eerste afgedrukte regel zou nu moeten luiden, <code>On branch main</code>.</p>
+<ol start="8" type="1">
+<li>Voeg de bestanden toe in je <code>mysite</code> map (<em>analoog aan het aanvinken van de vakjes naast je bestanden in de RStudio Git tab</em>)…</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dit voegt alle niet gevolgde of gewijzigde bestanden in één keer toe</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add . </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># als alternatief kun je alle files individueel toevoegen</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="op">&lt;</span>file_name<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Gebruik het <code>git status</code> commando opnieuw om te zien of je bestanden succesvol zijn toegevoegd <em>voordat</em> je ze vastlegt – alle niet gevolgde of gewijzigde bestanden die eerst in <strong>rood</strong> werden afgedrukt zouden nu in <strong>groen</strong> moeten verschijnen.</p>
+</div>
+</div>
+<p>..en ‘commit’ ze (leg ze vast() (<em>analoog aan het drukken op de knop “Vastleggen” in RStudio en het typen van je commitbericht in het pop-up venster</em>)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"initial commit"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="9" type="1">
+<li>Op dit punt heb je een lokale Git repository gemaakt die de basisbestanden bevat die nodig zijn om je Quarto website te bouwen. Nu moeten we een “remote” repository maken (dat wil zeggen een versie van je project die gehost wordt op het internet) op GitHub. Er zijn meerdere manieren om dit te doen, maar we zullen de werkwijze behandelen die voor mij het meest intuïtief werkt. Open/log in op <a href="https://github.com/">GitHub</a> en [maak een nieuwe repository].(https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository).</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<strong>Git vs.&nbsp;Github:</strong>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="https://git-scm.com/"><em>Git</em></a> is een versiebeheersysteem waarmee je de geschiedenis van versiebeheer van je bestanden kunt beheren en bijhouden, terwijl <a href="https://github.com/"><em>GitHub</em></a> een cloud-gebaseerde hostingdienst is waarmee je Git repositories kunt beheren. Zoals Jenny Bryan beschrijft in haar boek <a href="https://happygitwithr.com/index.html">Happy Git and GitHub for the useR</a>, hosting diensten zoals GitHub <em>“bieden een thuis voor je Git-gebaseerde projecten op het internet.”</em> Deze diensten helpen niet alleen om samenwerking te vergemakkelijken, maar ze beschermen je ook in het geval dat je computer plotseling kapot gaat – “kloon” gewoon je GitHub repository terug naar je nieuwe computer en voila! Je kunt meteen verder waar je gebleven was.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Niet initialiseren met een README, license, of <code>.gitignore</code> bestanden!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Doe dit niet als je je nieuwe GitHub repo aanmaakt om fouten te voorkomen. Je kunt deze toevoegen nadat je project gepushed is.</p>
+</div>
+</div>
+<ol start="10" type="1">
+<li>Kopieer de URL van de externe opslagplaats (bovenaan de pagina Snelle installatie) naar je klembord.</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="media/GH_quick_setup.png" class="img-fluid" width="1150"></p>
+</div>
+</div>
+<ol start="11" type="1">
+<li>Voeg in Terminal de URL toe voor het externe archief waar je lokale archief naartoe gepusht zal worden:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># stel de nieuwe remote in met de URL van je GitHub repo</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote add origin <span class="op">&lt;</span>REMOTE_URL<span class="op">&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># controleer of de nieuwe URL op afstand correct is (dit drukt gewoon de URL af die je hebt toegevoegd)</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> remote <span class="at">-v</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="12" type="1">
+<li>Push de wijzigingen in je lokale repository naar je remote repository op GitHub:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin main</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Als het lukt, zou je iets moeten zien dat lijkt op wat je hieronder ziet!</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">base</span><span class="kw">)</span> <span class="ex">Samanthas-MacBook-Air:mysite</span> samanthacsik$ git push <span class="at">-u</span> origin main</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Enumerating</span> objects: 33, done.</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Counting</span> objects: 100% <span class="er">(</span><span class="ex">33/33</span><span class="kw">)</span><span class="ex">,</span> done.</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Delta</span> compression using up to 8 threads</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Compressing</span> objects: 100% <span class="er">(</span><span class="ex">29/29</span><span class="kw">)</span><span class="ex">,</span> done.</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Writing</span> objects: 100% <span class="er">(</span><span class="ex">33/33</span><span class="kw">)</span><span class="ex">,</span> 273.20 KiB <span class="kw">|</span> <span class="ex">13.66</span> MiB/s, done.</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Total</span> 33 <span class="er">(</span><span class="ex">delta</span> 1<span class="kw">)</span><span class="ex">,</span> reused 0 <span class="er">(</span><span class="ex">delta</span> 0<span class="kw">)</span><span class="ex">,</span> pack-reused 0</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="ex">remote:</span> Resolving deltas: 100% <span class="er">(</span><span class="ex">1/1</span><span class="kw">)</span><span class="ex">,</span> done.</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="ex">To</span> https://github.com/samanthacsik/mysite.git</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a> <span class="ex">*</span> [new branch]      main <span class="at">-</span><span class="op">&gt;</span> main</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="ex">Branch</span> <span class="st">'main'</span> set up to track remote branch <span class="st">'main'</span> from <span class="st">'origin'</span>.</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">base</span><span class="kw">)</span> <span class="ex">Samanthas-MacBook-Air:mysite</span> samanthacsik$ </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Ververs je GitHub repository (in je web browser) om te zien dat je updates succesvol gepushed zijn!</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Maak een Quarto website binnen een bestaande GitHub repository
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>De bovenstaande instructies volgen de <strong>“maak eerst een lokaal R project (en initialiseer als een git repo) &gt; maak als tweede een upstream remote repo (op GitHub)”</strong> werkwijze. Als je echter al een remote GitHub repository hebt die je voor je website wilt gebruiken, kloon dan de GitHub repo, en voer het volgende commando in je terminal uit:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> create-project <span class="at">--type</span> website</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Dit voegt de standaard bestanden toe (<code>_quarto.yml</code>, <code>.gitignore</code>, <code>index.qmd</code>, <code>about.qmd</code>, <code>styles.css</code>) om aan de slag te gaan met je website. Je kunt deze aanpak ook gebruiken als je al een bestaande lokale directory met documenten of een R project hebt dat je wilt gebruiken als de directory voor je website. Navigeer eerst naar die directory/open dat R project en voer dan het bovenstaande commando uit in je terminal.</p>
+</div>
+</div>
+</div>
+<div id="tabset-2-3" class="tab-pane page-columns page-full" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<section id="waarom-rstudio-gebruiken-om-jouw-website-op-te-zetten" class="level3">
+<h3 class="anchored" data-anchor-id="waarom-rstudio-gebruiken-om-jouw-website-op-te-zetten"><strong>Waarom RStudio gebruiken om jouw website op te zetten?</strong></h3>
+<ul>
+<li>Het is <em>super</em> eenvoudig om dit te doen met een klik op slechts een paar knoppen! <strong>Onthoud</strong>, de commando’s die we intypen in ons terminalvenster (zoals hiervoor beschreven) liggen ten grondslag aan de knoppen waarop we klikken in de RStudio IDE – RStudio biedt gewoon een gebruiksvriendelijke interface voor het uitvoeren van die commando’s.</li>
+</ul>
+</section>
+<section id="stappen-1" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="stappen-1"><strong>Stappen:</strong></h3>
+<ol type="1">
+<li>Open RStudio en klik op de knop <img src="media/project.png" class="img-fluid" style="display: inline-block; margin: 0; position: relative; top: 0px; width:80px;height:18px;" alt="Aan de linkerkant staat een blauwe kubus met 'R' in het midden. Aan de rechterkant staan de woorden 'Project: (None)' in het wit, met een naar beneden gerichte pijl die een keuzemenu aangeeft"> knop in de rechterbovenhoek. Selecteer: <strong>New Project…</strong></li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/vRStudio1.png" class="img-fluid figure-img" width="1215"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="2" type="1">
+<li>Klik op <strong>New Directory</strong>, dan <strong>Quarto Website</strong></li>
+</ol>
+<div class="cell column-page quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="media/vRStudio2.png" class="img-fluid" width="1215"></p>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="media/vRStudio3.png" class="img-fluid" width="1215"></p>
+</div>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Vul het <strong>Directory name:</strong> veld in (dit is de naam van jouw R project en uiteindelijk de naam van jouw GitHub repo) en kies waar je je directory wilt opslaan met de <strong>Browse</strong> knop. Klik op <strong>Create Project</strong>.</li>
+</ol>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Noem jouw project <strong>jouwgebruikersnaam.github.io</strong> als je van plan bent om GitHub-pages te gaan gebruiken. Omdat we GitHub pagina’s gaan gebruiken om onze websites te publiceren/hosten, wordt dat aanbevolen (je mag <strong>één</strong> gebruikerswebsite aanmaken met het <strong>github. io</strong> suffix) – bijvoorbeeld, <a href="https://github.com/samanthacsik/samanthacsik.github.io">het project/GitHub repository</a>, dat de code bevat voor <a href="https://samanthacsik.github.io/">mijn persoonlijke website</a>, heet <strong>samanthacsik.github.io</strong>. Geef het anders een redelijke naam (dit wordt de <a href="https://developer.mozilla.org/en-US/docs/Glossary/Slug">slug</a> voor je site als je met GitHub pagina’s publiceert, dus kies zorgvuldig). Ik noem mijn project <strong>mysite</strong> <em>alleen voor instructiedoeleinden</em> – je zou het jouwe zeker een meer praktische/creatieve naam moeten geven.
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Organiseren van R projecten / git repositories
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Er zijn veel verschillende meningen over hoe je je R projecten/git repositories moet organiseren op je computer. Persoonlijk sla ik al mijn projecten op in een map genaamd <code>git</code> in de thuismap van mijn computer (bijvoorbeeld <code>Users/samanthacsik/git/</code>) zodat alles op één plek staat.</p>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/vRStudio4.png" class="img-fluid figure-img" width="1325"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>Je zou nu een map moeten zien met de naam <code>mysite</code> (of hoe u uw Quarto project ook genoemd heeft) met een serie bestanden (<code>_quarto.yml</code>, <code>about.qmd</code>, <code>index.qmd</code>, <code>styles.css</code>) die de steiger vormen voor jouw website in het <strong>Files</strong> tabblad (in het paneel rechtsonder in RStudio, als u de indeling van het deelvenster niet veranderd heeft).</li>
+</ul>
+<ol start="4" type="1">
+<li>Je hebt nu een map gemaakt met de website-basisbestanden, maar het wordt nog niet gevolgd door git, noch is het verbonden met een remote repository op GitHub. Om dit op te zetten, installeer je eerst het <a href="https://usethis.r-lib.org/index.html"><code>{usethis}</code></a> pakket als je dat nog niet hebt.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"usethis"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="5" type="1">
+<li>Voer in de Console (terwijl je in je website project in RStudio zit) <code>usethis::use_git()</code> uit om een lokale git repo aan te maken. Kies ja als je wordt gevraagd of het goed is om ongecommitteerde bestanden vast te leggen. Als gevraagd wordt om R opnieuw te starten, kies dan ja. Eenmaal klaar zou je het <strong>Git</strong> tabblad moeten zien verschijnen in je linker bovenvenster in RStudio.</li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/mysite_scaffolding_git.png" class="img-fluid figure-img" width="1215"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<code>{usethis}</code> is een pakket dat interactieve workflows faciliteert voor het maken en ontwikkelen van R projecten. We gebruiken de <code>{usethis}</code> workflow hier omdat het een super handig pakket is om te beginnen met het leren voor het opzetten van projecten. Echter, in plaats van de <code>usethis::use_git()</code> functie hier te gebruiken om je lokale git repo aan te maken, had je ook het vakje kunnen aanvinken waar staat <strong>Create a git repository</strong> bij het opzetten van je Quarto website (zie stap 3 hierboven).
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+<ol start="6" type="1">
+<li>Voer dan in de Console <code>usethis::use_github()</code> uit om een upstream remote repository aan te maken (d.w.z. GitHub repo). Jouw web browser zou moeten openen naar je nieuwe GitHub repository, met dezelfde naam als je lokale git repo/R project.</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Git vs.&nbsp;Github
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="https://git-scm.com/"><em>Git</em></a> is een versiebeheersysteem waarmee je de geschiedenis van versiebeheer van jouw bestanden kunt beheren en bijhouden, terwijl <a href="https://github.com/"><em>GitHub</em></a> een cloud-gebaseerde hostingdienst is waarmee je Git repositories kunt beheren. Zoals Jenny Bryan beschrijft in haar boek <a href="https://happygitwithr.com/index.html">Happy Git and GitHub for the useR</a>, hosting diensten zoals GitHub <em>“bieden een thuis voor jouw Git-gebaseerde projecten op het internet.”</em> Deze diensten helpen niet alleen om samenwerking te vergemakkelijken, maar ze beschermen je ook in het geval dat je computer plotseling kapot gaat – “kloon” gewoon je GitHub repository terug naar je nieuwe computer en voila! Je kunt meteen verder waar je gebleven was.</p>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/mysite_remote.png" class="img-fluid figure-img" width="1245"></p>
+<figcaption class="figure-caption">After running <code>usethis::use_github()</code> your browser window should open up to your new GitHub repository and look similar to the browser above.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<ol start="7" type="1">
+<li><p>Laten we vervolgens de naam van onze standaard branch controleren – dat is de branch waar alle wijzigingen uiteindelijk in worden samengevoegd (als je een website bouwt, is dit meestal de branch die je wilt implementeren). Er zijn meerdere manieren om dit te controleren – hier zijn twee eenvoudige opties:</p>
+<ol type="a">
+<li><p>open je Terminal-venster vanuit RStudio en typ <code>git status</code> – de eerste regel die verschijnt moet zijn <strong>`Op branch <branch_name>``</branch_name></strong>.</p></li>
+<li><p>klik op de <strong>Git</strong> tab in het rechter bovenvenster van RStudio. Naast de <img src="media/branch.png" class="img-fluid" style="display: inline-block; margin: 0; position: relative; top: 0px; width:20px;height:18px;" alt="Een witte ruit met twee paarse vierkanten, een direct boven en een direct rechts, verbonden met de ruit door een lijn."> symbool, je zou een dropdown menu moeten zien met de naam van je huidige tak.</p></li>
+</ol></li>
+</ol>
+<ul>
+<li><strong>Als je huidige branch <em><code>master</code></em> heet, volg dan stap 8 hieronder.</strong> <em>Waarom? </em> De racistische “master” terminologie voor git branches motiveert ons om onze standaard branch te updaten naar “main”. Als je branch <em><code>main</code></em> heet, dan kun je aan de slag! Je kunt doorgaan naar het volgende gedeelte, <a href="https://ucsb-meds.github.io/creating-quarto-websites/#publish-your-site-with-github-pages">Publiceer je site met GitHub Pages</a>.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+De volgorde van handelen kan bepalen of je standaard branch <code>main</code> of <code>master</code> heet Als je eerst een repo aanmaakt in <em>GitHub</em>, dan is de standaard nu bijgewerkt om de standaard branch <code>main</code> te maken. Maar, als je eerst een <em>lokale git repository</em> maakt (zoals we hier gedaan hebben), dan moet je misschien je standaard branchnaam bijwerken naar <code>main</code> (afhankelijk van je versie van Git en de configuratie-instellingen).
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+<ol start="8" type="1">
+<li>Laten we onze standaard branchnaam veranderen van <code>master</code> naar <code>main</code>. Voer in de console <code>usethis::git_default_branch_rename(from = "master", to = "main")</code> uit om je standaard branchnaam te updaten. Bevestig dat het <strong>(a)</strong> lokaal bijgewerkt is door opnieuw <code>git status</code> in je Terminal uit te voeren – de eerste afgedrukte regel zou nu moeten luiden, <code>Op branch main</code>, en <strong>(b)</strong> op je remote door je GitHub repo te verversen (in je web browser) – je zou de bijgewerkte standaard branchnaam bovenaan je repo moeten zien.</li>
+</ol>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Maak een Quarto website binnen een bestaande GitHub repository
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>De bovenstaande instructies volgen de <strong>“maak eerst een lokaal R project (en initialiseer als een git repo) &gt; maak als tweede een upstream remote repo (op GitHub)”</strong> werkwijze. Als je echter al een remote GitHub repository hebt die je voor je website wilt gebruiken, kloon dan de GitHub repo, en voer het volgende commando in je terminal uit:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> create-project <span class="at">--type</span> website</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Dit voegt de standaard bestanden toe (<code>_quarto.yml</code>, <code>.gitignore</code>, <code>index.qmd</code>, <code>about.qmd</code>, <code>styles.css</code>) om aan de slag te gaan met je website. Je kunt deze aanpak ook gebruiken als je al een bestaande lokale directory met documenten of een R project hebt dat je wilt gebruiken als de directory voor je website. Navigeer eerst naar die directory/open dat R project en voer dan het bovenstaande commando uit in je terminal.</p>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="jouw-site-bouwen-publiceren-met-github-pages" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="jouw-site-bouwen-publiceren-met-github-pages"><svg aria-label="GitHub" role="img" viewbox="0 0 496 512" style="height:1em;width:0.97em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>GitHub</title><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg> Jouw site bouwen &amp; publiceren met GitHub Pages</h2>
+<p>Er zijn <a href="https://quarto.org/docs/websites/publishing-websites.html">veel opties om je website te publiceren</a>. Wij zullen de <a href="https://quarto.org/docs/websites/publishing-websites.html#github-pages">GitHub Pages-optie</a> gebruiken, waarmee je een website vanuit elke GitHub repository kunt publiceren. Om dit te doen, zijn er een paar configuratiestappen:</p>
+<ol type="1">
+<li>Maak een bestand met de naam <code>.nojekyll</code> in je repository, wat nodig is om sommige bewerkingen van HTML bestanden uit te schakelen die GitHub standaard doet. Doe dit vanuit je <strong>terminal</strong> (je kunt de terminal tab in RStudio gebruiken of een apart terminal venster – zorg ervoor dat je in de juiste directory zit) met het volgende commando:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> .nojekyll</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <code>touch</code> command creates a new, empty file.</p>
+<p><code>.nojekyll</code> is een <em>verborgen</em> bestand dat niet zichtbaar in jouw map staat. Je <em>zou</em> het moeten zien verschijnen als een bestand om te volgen met git onder de <strong>Git</strong> tab in RStudio. Je kunt verborgen bestanden ook bekijken in Finder (Mac) met de sneltoets <code>Command</code> + <code>Shift</code> + <code>.</code>, of volg <a href="https://support.microsoft.com/en-us/windows/show-hidden-files-0320fe58-0117-fd59-6851-9b7f9840fdb2">deze instructies</a> voor Windows 10, 8.1, en 7.</p>
+</div>
+</div>
+<ol start="2" type="1">
+<li>Zet de <code>output-dir</code> in jouw <code>_quarto.yml</code> file op “docs” (dat kun je het makkelijkste doen vanuit RStudio):</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>project<span class="sc">:</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  type<span class="sc">:</span> website</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  output<span class="sc">-</span>dir<span class="sc">:</span> docs</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ~ additional metadata excluded for brevity ~</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>De <code>output-dir</code> is de map waar jouw gerenderde <code>.html</code> (en andere belangrijke) bestanden automatisch worden opgeslagen wanneer jij jouw website “bouwt” (zie de volgende stap!) – dat wil zeggen, wanneer je al je <code>.qmd</code> bestanden omzet naar de <code>.html</code> bestanden die jouw webbrowser kan interpreteren/weergeven.</p>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Maak jouw site door te klikken op de tab <strong>Build</strong> (kwadrant rechtsboven in RStudio) en vervolgens op <strong>Render Website.</strong> Je zou een minimale, zij het functionele, website moeten zien verschijnen in de tab <strong>Viewer</strong>. Klik op de <img src="media/view_in_browser.png" alt="Een browservenster met daaroverheen een pijl die omhoog wijst en naar rechts is gekanteld." style="display: inline-block; margin: 0; position: relative; top: 0px; width:25px;height:20px;"> knop om je bestand te openen in je webbrowser. <strong>Noot:</strong> je website wordt momenteel gehost op je lokale machine, niet op een doorzoekbare URL. Maar dat komt binnenkort wel!</li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/build_site.png" class="img-fluid figure-img" width="1341"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="4" type="1">
+<li><p>Nu moeten we alle bestanden in onze lokale git repository naar onze remote GitHub repository sturen:</p>
+<ol type="a">
+<li><strong>Stage</strong> jouw bestanden door alle vakjes in de <strong>Git</strong> tab aan te vinken (<em>dit is analoog aan het <code>git add .</code> commando dat in de Terminal wordt gebruikt om alle bestanden te stagen</em>)</li>
+<li><strong>commit</strong> jouw bestanden door op de commit knop te klikken, een commit bericht toe te voegen en op “commit” te klikken (<em>analoog aan <code>git commit -m "my commit message"</code></em>)</li>
+<li><strong>Push</strong> jouw bestanden naar de remote repository (op GitHub) door op de “Push” knop met de groene naar boven gerichte pijl te klikken (<em>analoog aan <code>git push</code></em>).</li>
+</ol></li>
+<li><p>Configureer GitHub pagina’s om inhoud van de “docs” map te serveren door te klikken op de <strong>Settings</strong> tab in de bovenste menubalk, dan <strong>Pages</strong> tab in de linker menubalk. Zorg ervoor dat Branch is ingesteld op <code>main</code> en dat de geselecteerde map is ingesteld op <code>/docs</code>. Klik op “Save”. Eenmaal uitgerold (dit kan een paar minuten duren), zal de URL van je website verschijnen in een box bovenaan de pagina (het kan zijn dat je een paar keer moet proberen te vernieuwen).</p></li>
+</ol>
+<div class="cell column-page quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/gh_pages.png" class="img-fluid figure-img" width="1552"></p>
+<figcaption class="figure-caption">De URL van onze website zal bovenaan de pagina verschijnen als je GitHub Pages hebt geconfigureerd om je Quarto site te transporteren</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/rendered_site.png" class="img-fluid figure-img" width="1552"></p>
+<figcaption class="figure-caption">De Quarto website is uitgezet! Nu is het tijd om de website aan te passen en de inhoud toe te voegen.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Bekijk de <strong>Actions</strong> tab op GitHub om de deployment status te bekijken. Zie de deployment status, de tijd van elke deployment, en hoe lang het duurde om elke run te deployen. Je kunt hier ook mislukte implementaties vinden (ja, dat gebeurt soms) en actie ondernemen om ze te repareren.
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="media/actions_tab.png" class="img-fluid" width="1552"></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="waar-moet-ik-beginnen-om-zaken-te-veranderen" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="waar-moet-ik-beginnen-om-zaken-te-veranderen"><svg aria-label="Pen To Square" role="img" viewbox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>Pen To Square</title><path d="M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1 377.9 88 407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9 390.1 168 255.8 302.2c-2.9 2.9-6.5 5-10.4 6.1l-58.5 16.7 16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25C446.8-3.1 401.2-3.1 373.1 25zM88 64C39.4 64 0 103.4 0 152V424c0 48.6 39.4 88 88 88H360c48.6 0 88-39.4 88-88V312c0-13.3-10.7-24-24-24s-24 10.7-24 24V424c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V152c0-22.1 17.9-40 40-40H200c13.3 0 24-10.7 24-24s-10.7-24-24-24H88z"></path></svg> Waar moet ik beginnen om zaken te veranderen?</h2>
+<p>Op dit moment is onze website gebouwd met de standaardstyling van Quarto. Laten we eens kijken waar dingen staan en hoe we kunnen beginnen met het aanpassen van sommige dingen.</p>
+<section id="fa-arrow-right-titlean-arrow-pointing-to-the-right-knoei-niet-met-dingen-in-docs" class="level3">
+<h3 class="anchored" data-anchor-id="fa-arrow-right-titlean-arrow-pointing-to-the-right-knoei-niet-met-dingen-in-docs"><i class="fa-solid fa-arrow-right" title="An arrow pointing to the right" aria-hidden="true"></i> <strong>Knoei niet met dingen in <code>/docs</code></strong></h3>
+<p>Wanneer jij jouw site rendert (door te klikken op Build &gt; Render Website), neemt Quarto al je <code>.qmd</code> bestanden, converteert ze naar <code>.html</code> bestanden (samen met wat andere belangrijke dingen) en slaat alles op in jouw <code>/docs</code> map. Jouw site wordt vanuit deze map geïnstalleerd, dus je wilt hier echt niets direct veranderen.</p>
+</section>
+<section id="fa-arrow-right-titlean-arrow-pointing-to-the-right-inhoud-toevoegen-aan-jouw-basispagina-index.qmd" class="level3">
+<h3 class="anchored" data-anchor-id="fa-arrow-right-titlean-arrow-pointing-to-the-right-inhoud-toevoegen-aan-jouw-basispagina-index.qmd"><i class="fa-solid fa-arrow-right" title="An arrow pointing to the right" aria-hidden="true"></i> <strong>Inhoud toevoegen aan jouw basispagina (<code>index.qmd</code>)</strong></h3>
+<p>Onthoud: <code>index.qmd</code> is de pagina waarop mensen terechtkomen als ze naar jouw website navigeren – geef deze basispagina/homepage een opknapbeurt door een aantal van de volgende dingen uit te proberen:</p>
+<ul>
+<li><p>Werk de yaml <code>titel</code> in je <code>index.qmd</code> bestand bij. Hier heb ik de mijne veranderd van “mysite” naar mijn naam, “Samantha Csik”</p></li>
+<li><p>Verwijder de voorbeeldtekst en begin met het toevoegen van jouw eigen inhoud – een goede plek om te beginnen is een korte beschrijving waarin je jezelf voorstelt!</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/no_about_page.png" class="img-fluid figure-img" width="1552"></p>
+<figcaption class="figure-caption">De startpagina van mijn Quarto website, die nu mijn naam en wat inhoud bevat, maar visueel nog niet heel aantrekkelijk is…</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="fa-arrow-right-titlean-arrow-pointing-to-the-right-maak-van-jouw-basispagina-index.qmd-een-over-pagina-met-een-foto" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="fa-arrow-right-titlean-arrow-pointing-to-the-right-maak-van-jouw-basispagina-index.qmd-een-over-pagina-met-een-foto"><i class="fa-solid fa-arrow-right" title="An arrow pointing to the right" aria-hidden="true"></i> <strong>Maak van jouw basispagina (<code>index.qmd</code>) een “<a href="https://quarto.org/docs/websites/website-about.html">Over Pagina</a>” met een foto</strong></h3>
+<p>Wanneer de <code>over</code> optie is toegevoegd aan de yaml van een document, wordt een speciaal sjabloon gebruikt om de inhoud van die pagina op te maken. Kies uit een van Quarto’s vijf [ingebouwde sjablonen] (https://quarto.org/docs/websites/website-about.html#templates), elk met een iets andere opmaakstijl. Enkele yaml opties om mee te spelen:</p>
+<ul>
+<li><p><code>template</code>: kies uit Quarto’s ingebouwde templateopties;</p></li>
+<li><p><code>image</code> (<em>merk op dat dit een optie is op documentniveau</em>, dus geen sub-item van <code>over</code>): geef het bestandspad naar je foto op</p></li>
+<li><p><code>image-width</code> &amp; <code>image-shape</code>: pas de grootte en vorm van je afbeelding aan (<code>round</code>, <code>rounded</code>, <code>rectangle</code>)</p></li>
+<li><p><code>links</code>: knoppen toevoegen met links naar je sociale mediapagina’s</p></li>
+</ul>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>index.qmd</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="annotated-cell-8"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-8-1"><a href="#annotated-cell-8-1" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span>
+<span id="annotated-cell-8-2"><a href="#annotated-cell-8-2" aria-hidden="true" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">"Samantha Csik"</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="1" onclick="event.preventDefault();" href="">1</a><span id="annotated-cell-8-3" class="code-annotation-target"><a href="#annotated-cell-8-3" aria-hidden="true" tabindex="-1"></a>image<span class="sc">:</span> headshot.jpg</span>
+<span id="annotated-cell-8-4"><a href="#annotated-cell-8-4" aria-hidden="true" tabindex="-1"></a>about<span class="sc">:</span> </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="2" onclick="event.preventDefault();" href="">2</a><span id="annotated-cell-8-5" class="code-annotation-target"><a href="#annotated-cell-8-5" aria-hidden="true" tabindex="-1"></a>  template<span class="sc">:</span> trestles</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="3" onclick="event.preventDefault();" href="">3</a><span id="annotated-cell-8-6" class="code-annotation-target"><a href="#annotated-cell-8-6" aria-hidden="true" tabindex="-1"></a>  image<span class="sc">-</span>shape<span class="sc">:</span> round</span>
+<span id="annotated-cell-8-7"><a href="#annotated-cell-8-7" aria-hidden="true" tabindex="-1"></a>  image<span class="sc">-</span>width<span class="sc">:</span> 23em</span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-8" data-target-annotation="4" onclick="event.preventDefault();" href="">4</a><span id="annotated-cell-8-8" class="code-annotation-target"><a href="#annotated-cell-8-8" aria-hidden="true" tabindex="-1"></a>  links<span class="sc">:</span></span>
+<span id="annotated-cell-8-9"><a href="#annotated-cell-8-9" aria-hidden="true" tabindex="-1"></a>    <span class="sc">-</span> text<span class="sc">:</span> LinkedIn</span>
+<span id="annotated-cell-8-10"><a href="#annotated-cell-8-10" aria-hidden="true" tabindex="-1"></a>      href<span class="sc">:</span> https<span class="sc">:</span><span class="er">//</span>www.linkedin.com<span class="sc">/</span><span class="cf">in</span><span class="sc">/</span>samanthacsik<span class="sc">/</span></span>
+<span id="annotated-cell-8-11"><a href="#annotated-cell-8-11" aria-hidden="true" tabindex="-1"></a>    <span class="sc">-</span> text<span class="sc">:</span> Twitter</span>
+<span id="annotated-cell-8-12"><a href="#annotated-cell-8-12" aria-hidden="true" tabindex="-1"></a>      href<span class="sc">:</span> https<span class="sc">:</span><span class="er">//</span>twitter.com<span class="sc">/</span>SamanthaCsik</span>
+<span id="annotated-cell-8-13"><a href="#annotated-cell-8-13" aria-hidden="true" tabindex="-1"></a>    <span class="sc">-</span> text<span class="sc">:</span> GitHub</span>
+<span id="annotated-cell-8-14"><a href="#annotated-cell-8-14" aria-hidden="true" tabindex="-1"></a>      href<span class="sc">:</span> https<span class="sc">:</span><span class="er">//</span>github.com<span class="sc">/</span>samanthacsik</span>
+<span id="annotated-cell-8-15"><a href="#annotated-cell-8-15" aria-hidden="true" tabindex="-1"></a>    <span class="sc">-</span> text<span class="sc">:</span> Email</span>
+<span id="annotated-cell-8-16"><a href="#annotated-cell-8-16" aria-hidden="true" tabindex="-1"></a>      href<span class="sc">:</span> mailto<span class="sc">:</span>scsik<span class="sc">@</span>ucsb.edu</span>
+<span id="annotated-cell-8-17"><a href="#annotated-cell-8-17" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span>
+<span id="annotated-cell-8-18"><a href="#annotated-cell-8-18" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="annotated-cell-8-19"><a href="#annotated-cell-8-19" aria-hidden="true" tabindex="-1"></a><span class="co"># pagina-inhoud weggelaten voor beknoptheid  ~</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-8" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-lines="3" data-code-annotation="1" data-code-cell="annotated-cell-8">voeg een foto toe door een bestandspad en afbeeldingsnaam op te geven (hier staat <code>headshot.jpg</code> in de hoofdmap van mijn repo).<br>
+</span>
+</dd>
+<dt data-target-cell="annotated-cell-8" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-lines="5" data-code-annotation="2" data-code-cell="annotated-cell-8">gebruik een <a href="https://quarto.org/docs/websites/website-about.html#templates">vooraf gebouwd sjabloon</a> (hier, <code>trestles</code>) om de lay-out van je basispagina (of welke pagina dan ook!) bij te werken<br>
+</span>
+</dd>
+<dt data-target-cell="annotated-cell-8" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-lines="6,7" data-code-annotation="3" data-code-cell="annotated-cell-8">stel de afbeeldingsvorm in (<code>rond</code>, <code>afgerond</code>, <code>rechthoek</code>) &amp; de grootte<br>
+</span>
+</dd>
+<dt data-target-cell="annotated-cell-8" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-lines="8,9,10,11,12,13,14,15,16" data-code-annotation="4" data-code-cell="annotated-cell-8">voeg button links toe naar je favoriete social media pagina’s (bijv. LinkedIn, Twitter, GitHub, en zelfs je email – <strong>Noot:</strong> de <code>mailto::</code> voor je email adres, <code>mailto::youremail.com</code>)</span>
+</dd>
+</dl>
+</div>
+</div>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><strong>Aardigheidje:</strong> Installeer de <a href="https://github.com/quarto-ext/fontawesome">Font Awesome Extension for Quarto</a> om gratis <a href="https://fontawesome.com/">Font Awesome</a> <svg aria-label="Font Awesome" role="img" viewbox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>Font Awesome</title><path d="M48 56c0-13.3-10.7-24-24-24S0 42.7 0 56V456c0 13.3 10.7 24 24 24s24-10.7 24-24V124.2l12.5-2.4c16.7-3.2 31.5-8.5 44.2-13.1l0 0 0 0c3.7-1.3 7.1-2.6 10.4-3.7c15.2-5.2 30.4-9.1 51.2-9.1c25.6 0 43 6 63.5 13.3l.5 .2c20.9 7.4 44.8 15.9 79.1 15.9c32.4 0 53.7-6.8 90.5-19.6V342.9l-9.5 3.3c-41.5 14.4-55.2 19.2-81 19.2c-25.7 0-43.1-6-63.6-13.3l-.6-.2c-20.8-7.4-44.8-15.8-79-15.8c-16.8 0-31 2-43.9 5c-12.9 3-20.9 16-17.9 28.9s16 20.9 28.9 17.9c9.6-2.2 20.1-3.7 32.9-3.7c25.6 0 43 6 63.5 13.3l.5 .2c20.9 7.4 44.8 15.9 79.1 15.9c34.4 0 56.4-7.7 97.8-22.2c7.5-2.6 15.5-5.4 24.4-8.5l16.2-5.5V360 72 38.4L416.2 49.3c-9.7 3.3-18.2 6.3-25.7 8.9c-41.5 14.4-55.2 19.2-81 19.2c-25.7 0-43.1-6-63.6-13.3l-.6-.2c-20.8-7.4-44.8-15.8-79-15.8c-27.8 0-48.5 5.5-66.6 11.6c-4.9 1.7-9.3 3.3-13.6 4.8c-11.9 4.3-22 7.9-34.7 10.3L48 75.4V56z"></path></svg> pictogrammen aan jouw site toe te voegen! Zorg ervoor dat je de <a href="https://quarto.org/docs/websites/website-about.html#links"><code>icon</code> optie</a> bekijkt wanneer u gekoppelde knoppen toevoegt aan uw Over pagina.</p>
+</div></div><div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/about_page.png" class="img-fluid figure-img" width="1571"></p>
+<figcaption class="figure-caption">Sems Quarto website na het bijwerken van haar basispagina met het ingebouwde <code>trestles</code> sjabloon, het toevoegen van een afbeelding en gekoppelde knoppen. (<strong>Aantekening:</strong> Het gebruik van drie streepjes, <code>---</code>, creëert een paginascheiding, zoals te zien is tussen secties in de schermafbeelding hierboven). Al met al een grote verbetering! Onze tekst is echter een beetje geplet in het midden van de pagina – dat lossen we in de volgende stap op.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Quarto ondersteunt het maken van volledig aangepaste pagina-lay-outs – maar ik raad aan om bij een template te blijven als je begint. Quarto’s ingebouwde <a href="https://quarto.org/docs/websites/website-about.html#templates">Over Pagina templates</a> zijn geweldig om een paar redenen, voornamelijk:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>ze bieden een snelle en gemakkelijke manier om visueel aantrekkelijke webpagina’s te maken (met name website basispagina’s).<br>
+</li>
+<li>ze zorgen voor veel van de lastige “onder de motorkap” styling (bijvoorbeeld het creëren van “responsive” pagina-elementen, d.w.z. automatisch de inhoud herschikken om te passen bij veranderende viewport-formaten) die anders een behoorlijke dosis <a href="https://quarto.org/docs/websites/website-about.html#templates">CSS</a> kennis zou vereisen. Bijvoorbeeld het maken van “responsieve” pagina-elementen.</li>
+</ol>
+<p>Naarmate u meer vertrouwd raakt met het Quarto raamwerk en CSS voor het stylen van webpagina’s (we leren hier allicht meer over in een latere blog), kunt je besluiten om een volledig aangepaste webpagina lay-out te maken. U kunt de <a href="https://quarto.org/docs/output-formats/page-layout.html">Quarto documentatie</a> bekijken voor meer informatie.</p>
+</div>
+</div>
+</section>
+<section id="fa-arrow-right-titlean-arrow-pointing-to-the-right-wijzig-het-uiterlijk-van-de-website-in-_quarto.yml" class="level3">
+<h3 class="anchored" data-anchor-id="fa-arrow-right-titlean-arrow-pointing-to-the-right-wijzig-het-uiterlijk-van-de-website-in-_quarto.yml"><i class="fa-solid fa-arrow-right" title="An arrow pointing to the right" aria-hidden="true"></i> <strong>Wijzig het uiterlijk van de website in <code>_quarto.yml</code></strong></h3>
+<p>Het bestand <code>_quarto.yml</code> is een configuratiebestand – elk document dat wordt gerenderd in de projectmap zal automatisch de metadata erven die in dit bestand zijn gedefinieerd. Enkele eenvoudige updates die een groot verschil maken:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>_quarto.yml</strong></pre>
+</div>
+<div class="sourceCode" id="annotated-cell-9"><pre class="sourceCode yaml code-annotation-code code-with-copy code-annotated"><code class="sourceCode yaml"><span id="annotated-cell-9-1"><a href="#annotated-cell-9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">project</span><span class="kw">:</span></span>
+<span id="annotated-cell-9-2"><a href="#annotated-cell-9-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> website</span></span>
+<span id="annotated-cell-9-3"><a href="#annotated-cell-9-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">output-dir</span><span class="kw">:</span><span class="at"> docs</span></span>
+<span id="annotated-cell-9-4"><a href="#annotated-cell-9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-9-5"><a href="#annotated-cell-9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">website</span><span class="kw">:</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="1" onclick="event.preventDefault();" href="">1</a><span id="annotated-cell-9-6" class="code-annotation-target"><a href="#annotated-cell-9-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Samantha Csik"</span></span>
+<span id="annotated-cell-9-7"><a href="#annotated-cell-9-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">navbar</span><span class="kw">:</span></span>
+<span id="annotated-cell-9-8"><a href="#annotated-cell-9-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">left</span><span class="kw">:</span></span>
+<span id="annotated-cell-9-9"><a href="#annotated-cell-9-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">href</span><span class="kw">:</span><span class="at"> index.qmd</span></span>
+<span id="annotated-cell-9-10"><a href="#annotated-cell-9-10" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">text</span><span class="kw">:</span><span class="at"> Home</span></span>
+<span id="annotated-cell-9-11"><a href="#annotated-cell-9-11" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> about.qmd</span></span>
+<span id="annotated-cell-9-12"><a href="#annotated-cell-9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-9-13"><a href="#annotated-cell-9-13" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="annotated-cell-9-14"><a href="#annotated-cell-9-14" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="annotated-cell-9-15"><a href="#annotated-cell-9-15" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> cosmo</span></span>
+<span id="annotated-cell-9-16"><a href="#annotated-cell-9-16" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">css</span><span class="kw">:</span><span class="at"> styles.css</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="2" onclick="event.preventDefault();" href="">2</a><span id="annotated-cell-9-17" class="code-annotation-target"><a href="#annotated-cell-9-17" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">page-layout</span><span class="kw">:</span><span class="at"> full</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-9" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-lines="6" data-code-annotation="1" data-code-cell="annotated-cell-9">Geef jouw website een betere titel (bijv. jouw naam)! Dit is de tekst die in de linkerbovenhoek van je website verschijnt (standaard is dit de naam van je repo) – als je erop klikt, wordt een gebruiker teruggebracht naar de basisagina.<br>
+</span>
+</dd>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-lines="17" data-code-annotation="2" data-code-cell="annotated-cell-9">Stel je <code>page-layout</code> in op <code>full</code> zodat je pagina-inhoud een groter deel van de paginabreedte in beslag neemt</span>
+</dd>
+</dl>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/full_page.png" class="img-fluid figure-img" width="1508"></p>
+<figcaption class="figure-caption">Sams website met een nieuwe titel (zie linkerbovenhoek) en met <code>page-layout</code> ingesteld op <code>full</code>, zodat de inhoud niet zo geplet in het midden van de pagina verschijnt.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="fa-arrow-right-titlean-arrow-pointing-to-the-right-voeg-meer-paginas-toe-aan-jouw-website" class="level3">
+<h3 class="anchored" data-anchor-id="fa-arrow-right-titlean-arrow-pointing-to-the-right-voeg-meer-paginas-toe-aan-jouw-website"><i class="fa-solid fa-arrow-right" title="An arrow pointing to the right" aria-hidden="true"></i> <strong>Voeg meer pagina’s toe aan jouw website</strong></h3>
+<p>In het standaard Quarto website skelet, zijn er twee items in de navbar die verschijnen als “Home” en “Over” (<strong>Noot:</strong> verwar de speciaal opgemaakte “Over pagina” die we hebben gemaakt in <code>index.qmd</code> niet met de navbar pagina met de huidige titel “Over”). Deze navbar tabs linken naar twee <code>.html</code> bestanden (<code>index.html</code> en <code>about.html</code>) en worden automatisch gerenderd wanneer je naar <code>/docs</code> bouwt (je hoeft ze dus niet handmatig te knopen om de html te maken). Het toevoegen van een nieuwe pagina aan je website vereist twee stappen:<br>
+a. <strong>Maak een nieuw <code>.qmd</code> bestand</strong> (New File &gt; Quarto Document en sla het op in de hoofdmap van je project) en voeg de inhoud toe die je op die pagina wilt hebben. Hier maak ik een nieuwe pagina genaamd “Al mijn favoriete bronnen!” en sla het op in mijn hoofdmap als <code>resources.qmd</code>. b. <strong>Update <code>_quarto.yml</code></strong> door je nieuwe <code>.qmd</code> toe te voegen aan de lijst van navbar pagina’s. Het <code>_quarto.yml</code> bestand van mijn website ziet er nu zo uit:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>_quarto.yml</strong></pre>
+</div>
+<div class="sourceCode" id="annotated-cell-10"><pre class="sourceCode yaml code-annotation-code code-with-copy code-annotated"><code class="sourceCode yaml"><span id="annotated-cell-10-1"><a href="#annotated-cell-10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">project</span><span class="kw">:</span></span>
+<span id="annotated-cell-10-2"><a href="#annotated-cell-10-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> website</span></span>
+<span id="annotated-cell-10-3"><a href="#annotated-cell-10-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">output-dir</span><span class="kw">:</span><span class="at"> docs</span></span>
+<span id="annotated-cell-10-4"><a href="#annotated-cell-10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-10-5"><a href="#annotated-cell-10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">website</span><span class="kw">:</span></span>
+<span id="annotated-cell-10-6"><a href="#annotated-cell-10-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Samantha Csik"</span></span>
+<span id="annotated-cell-10-7"><a href="#annotated-cell-10-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">navbar</span><span class="kw">:</span></span>
+<span id="annotated-cell-10-8"><a href="#annotated-cell-10-8" aria-hidden="true" tabindex="-1"></a><span class="at">   </span><span class="fu">background</span><span class="kw">:</span><span class="at"> primary</span></span>
+<span id="annotated-cell-10-9"><a href="#annotated-cell-10-9" aria-hidden="true" tabindex="-1"></a><span class="at">   </span><span class="fu">left</span><span class="kw">:</span></span>
+<span id="annotated-cell-10-10"><a href="#annotated-cell-10-10" aria-hidden="true" tabindex="-1"></a><span class="at">     </span><span class="kw">-</span><span class="at"> </span><span class="fu">href</span><span class="kw">:</span><span class="at"> index.qmd</span></span>
+<span id="annotated-cell-10-11"><a href="#annotated-cell-10-11" aria-hidden="true" tabindex="-1"></a><span class="at">       </span><span class="fu">text</span><span class="kw">:</span><span class="at"> Home</span></span>
+<span id="annotated-cell-10-12"><a href="#annotated-cell-10-12" aria-hidden="true" tabindex="-1"></a><span class="at">     </span><span class="kw">-</span><span class="at"> about.qmd</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="1" onclick="event.preventDefault();" href="">1</a><span id="annotated-cell-10-13" class="code-annotation-target"><a href="#annotated-cell-10-13" aria-hidden="true" tabindex="-1"></a><span class="at">     </span><span class="kw">-</span><span class="at"> resources.qmd</span></span>
+<span id="annotated-cell-10-14"><a href="#annotated-cell-10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-10-15"><a href="#annotated-cell-10-15" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="annotated-cell-10-16"><a href="#annotated-cell-10-16" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="annotated-cell-10-17"><a href="#annotated-cell-10-17" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> cosmo</span></span>
+<span id="annotated-cell-10-18"><a href="#annotated-cell-10-18" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">css</span><span class="kw">:</span><span class="at"> styles.css</span></span>
+<span id="annotated-cell-10-19"><a href="#annotated-cell-10-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-10-20"><a href="#annotated-cell-10-20" aria-hidden="true" tabindex="-1"></a><span class="fu">editor</span><span class="kw">:</span><span class="at"> visual</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<dl class="code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-lines="13" data-code-annotation="1" data-code-cell="annotated-cell-10">Een nieuw toegevoegde navbarpagina. <strong>Noot:</strong> De naam van de pagina, zoals die verschijnt in de navigatiebalk van jouw website, zal hetzelfde zijn als wat er staat in het <code>title</code> veld van de yaml van dat bestand. Ik heb bijvoorbeeld <code>title: "Al mijn favoriete bronnen!"</code> in de yaml van <code>resources.qmd</code> – dit is hoe het zal verschijnen in de navigatiebalk van mijn website. Als je wilt dat de paginanaam anders wordt weergegeven in de navigatiebalk, gebruik dan de <code>href</code> en <code>text</code> opties samen (zie bijvoorbeeld hoe <code>index.qmd</code> wordt weergegeven als <code>Home</code> in de navigatiebalk van mijn website).</span>
+</dd>
+</dl>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/resources_page.png" class="img-fluid figure-img" width="1552"></p>
+<figcaption class="figure-caption">Een nieuwe toegevoegde navigatiebalktitel, met de titel ‘Al mijn favoriete bronnen!’</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="fa-arrow-right-titlean-arrow-pointing-to-the-right-verander-het-thema" class="level2">
+<h2 class="anchored" data-anchor-id="fa-arrow-right-titlean-arrow-pointing-to-the-right-verander-het-thema"><i class="fa-solid fa-arrow-right" title="An arrow pointing to the right" aria-hidden="true"></i> <strong>Verander het thema</strong></h2>
+<p>Werk het uiterlijk van jouuw site bij door te kiezen uit een van de 25 voorgedefinieerde <a href="https://bootswatch.com/">Bootswatch-thema’s</a>. Standaard worden Quarto sites gebouwd met het <a href="https://bootswatch.com/cosmo/">cosmo</a> thema. Geef slechts één themanaam op in de <code>theme</code> optie in uw <code>_quarto.qmd</code> bestand:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>_quarto.yml</strong></pre>
+</div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ~ additional metadata excluded for brevity ~</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># supplying just one theme ("minty")</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> minty</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">css</span><span class="kw">:</span><span class="at"> styles.css</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/light.png" class="img-fluid figure-img" width="1508"></p>
+<figcaption class="figure-caption">Met thema, ‘minty’, een voorgebouwd <a href="https://bootswatch.com/">Bootswatch thema</a></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><em>of</em> zowel een donker als een licht thema leveren waar gebruikers tussen kunnen wisselen:</p>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>_quarto.yml</strong></pre>
+</div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ~ additional metadata excluded for brevity ~</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># supplying a light ("minty") and dark ("slate") theme to toggle between</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">light</span><span class="kw">:</span><span class="at"> minty</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">dark</span><span class="kw">:</span><span class="at"> slate</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">css</span><span class="kw">:</span><span class="at"> styles.css</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="media/dark.png" class="img-fluid figure-img" width="1552"></p>
+<figcaption class="figure-caption">Met licht/donker thema-opties toegepast; hier is het <code>donkere</code> thema, dat is ingesteld op het voorgebouwde <a href="https://bootswatch.com/">Bootswatch thema</a> thema, <code>slate</code>, ingeschakeld.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+“Render Website” altijd voordat je veranderingen die je wilt uitrollen pushed! Je <em>moet</em> <strong>Render Website</strong> (onder de <strong>Build</strong> tab) voordat je toegevoegde/gewijzigde bestanden naar GitHub pushed als je die veranderingen bijgewerkt wilt zien op je site. Alleen individuele bestanden renderen zal niet werken.
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+</section>
+<section id="vooruit-kijken" class="level2">
+<h2 class="anchored" data-anchor-id="vooruit-kijken"><svg aria-label="Forward" role="img" viewbox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>Forward</title><path d="M52.5 440.6c-9.5 7.9-22.8 9.7-34.1 4.4S0 428.4 0 416V96C0 83.6 7.2 72.3 18.4 67s24.5-3.6 34.1 4.4L224 214.3V256v41.7L52.5 440.6zM256 352V256 128 96c0-12.4 7.2-23.7 18.4-29s24.5-3.6 34.1 4.4l192 160c7.3 6.1 11.5 15.1 11.5 24.6s-4.2 18.5-11.5 24.6l-192 160c-9.5 7.9-22.8 9.7-34.1 4.4s-18.4-16.6-18.4-29V352z"></path></svg> Vooruit kijken</h2>
+<p>Je zou nu een basisversie van je website moeten hebben 🎉 Tijdens het herfstkwartaal leren de studenten van Sam hoe ze:</p>
+<p>a. <a href="https://ucsb-meds.github.io/customizing-quarto-websites/#/title-slide">het uiterlijk van onze site aanpassen met Sass &amp; CSS</a></p>
+<p>b. <a href="https://samanthacsik.github.io/posts/2022-10-24-quarto-blogs/">een blog en blogberichten toevoegen aan onze websites</a></p>
+<p>c. continu ontwikkelen van hun merk</p>
+<p>Tegelijkertijd, kijk naar <a href="https://ucsb-meds.github.io/student_websites.html">huidige student &amp; alumni websites</a> (<strong>Noot:</strong> MEDS klas van 2022 gebruikte <a href="https://rstudio.github.io/distill/website.html"><code>{distill}</code></a> pakket om hun websites te bouwen) voor inspiratie of duik in de <a href="https://quarto.org/docs/websites/">Quarto Website documentatie</a> als je nu aan de slag wilt met verdere aanpassingen.</p>
+</section>
+<section id="extra-bronnen-om-je-enthousiast-te-maken-over-quarto" class="level2">
+<h2 class="anchored" data-anchor-id="extra-bronnen-om-je-enthousiast-te-maken-over-quarto"><svg aria-label="Star" role="img" viewbox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>Star</title><path d="M287.9 0c9.2 0 17.6 5.2 21.6 13.5l68.6 141.3 153.2 22.6c9 1.3 16.5 7.6 19.3 16.3s.5 18.1-5.9 24.5L433.6 328.4l26.2 155.6c1.5 9-2.2 18.1-9.6 23.5s-17.3 6-25.3 1.7l-137-73.2L151 509.1c-8.1 4.3-17.9 3.7-25.3-1.7s-11.2-14.5-9.7-23.5l26.2-155.6L31.1 218.2c-6.5-6.4-8.7-15.9-5.9-24.5s10.3-14.9 19.3-16.3l153.2-22.6L266.3 13.5C270.4 5.2 278.7 0 287.9 0zm0 79L235.4 187.2c-3.5 7.1-10.2 12.1-18.1 13.3L99 217.9 184.9 303c5.5 5.5 8.1 13.3 6.8 21L171.4 443.7l105.2-56.2c7.1-3.8 15.6-3.8 22.6 0l105.2 56.2L384.2 324.1c-1.3-7.7 1.2-15.5 6.8-21l85.9-85.1L358.6 200.5c-7.8-1.2-14.6-6.1-18.1-13.3L287.9 79z"></path></svg> Extra bronnen om je enthousiast te maken over Quarto</h2>
+<ul>
+<li><p>We don’t talk about Quarto, door Alison Hill | <a href="https://www.apreshill.com/blog/2022-04-we-dont-talk-about-quarto/"><svg aria-label="Blog" role="img" viewbox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>Blog</title><path d="M192 32c0 17.7 14.3 32 32 32c123.7 0 224 100.3 224 224c0 17.7 14.3 32 32 32s32-14.3 32-32C512 128.9 383.1 0 224 0c-17.7 0-32 14.3-32 32zm0 96c0 17.7 14.3 32 32 32c70.7 0 128 57.3 128 128c0 17.7 14.3 32 32 32s32-14.3 32-32c0-106-86-192-192-192c-17.7 0-32 14.3-32 32zM96 144c0-26.5-21.5-48-48-48S0 117.5 0 144V368c0 79.5 64.5 144 144 144s144-64.5 144-144s-64.5-144-144-144H128v96h16c26.5 0 48 21.5 48 48s-21.5 48-48 48s-48-21.5-48-48V144z"></path></svg> blog post</a></p></li>
+<li><p>Reproducible Authoring with Quarto, door Mine Çetinkaya-Rundel | <a href="https://mine-cetinkaya-rundel.github.io/2022-repro-toronto/#/title-slide"><svg aria-label="Desktop" role="img" viewbox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>Desktop</title><path d="M64 0C28.7 0 0 28.7 0 64V352c0 35.3 28.7 64 64 64H240l-10.7 32H160c-17.7 0-32 14.3-32 32s14.3 32 32 32H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H346.7L336 416H512c35.3 0 64-28.7 64-64V64c0-35.3-28.7-64-64-64H64zM512 64V288H64V64H512z"></path></svg> slides</a> | <a href="https://www.youtube.com/watch?v=6p4vOKS6Xls"><svg aria-label="Video" role="img" viewbox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>Video</title><path d="M0 128C0 92.7 28.7 64 64 64H320c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128zM559.1 99.8c10.4 5.6 16.9 16.4 16.9 28.2V384c0 11.8-6.5 22.6-16.9 28.2s-23 5-32.9-1.6l-96-64L416 337.1V320 192 174.9l14.2-9.5 96-64c9.8-6.5 22.4-7.2 32.9-1.6z"></path></svg> recording</a></p></li>
+<li><p>Hello Quarto! A Chat with NASA Openscapes, Co-Hosted door R-Ladies Santa Barbara | <a href="https://www.openscapes.org/blog/2022/06/22/hello-quarto/"><svg aria-label="Blog" role="img" viewbox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>Blog</title><path d="M192 32c0 17.7 14.3 32 32 32c123.7 0 224 100.3 224 224c0 17.7 14.3 32 32 32s32-14.3 32-32C512 128.9 383.1 0 224 0c-17.7 0-32 14.3-32 32zm0 96c0 17.7 14.3 32 32 32c70.7 0 128 57.3 128 128c0 17.7 14.3 32 32 32s32-14.3 32-32c0-106-86-192-192-192c-17.7 0-32 14.3-32 32zM96 144c0-26.5-21.5-48-48-48S0 117.5 0 144V368c0 79.5 64.5 144 144 144s144-64.5 144-144s-64.5-144-144-144H128v96h16c26.5 0 48 21.5 48 48s-21.5 48-48 48s-48-21.5-48-48V144z"></path></svg> blog post</a> | <a href="https://www.youtube.com/watch?v=azVAl343CIU"><svg aria-label="Video" role="img" viewbox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>Video</title><path d="M0 128C0 92.7 28.7 64 64 64H320c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128zM559.1 99.8c10.4 5.6 16.9 16.4 16.9 28.2V384c0 11.8-6.5 22.6-16.9 28.2s-23 5-32.9-1.6l-96-64L416 337.1V320 192 174.9l14.2-9.5 96-64c9.8-6.5 22.4-7.2 32.9-1.6z"></path></svg> recording</a></p></li>
+<li><p>rstudio::conf 2022 keynote, Hello Quarto, door Julie Lowndes and Mine Çetinkaya-Rundel | <a href="https://www.rstudio.com/conference/2022/keynotes/collaborate-with-quarto/"><svg aria-label="Video" role="img" viewbox="0 0 576 512" style="height:1em;width:1.12em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>Video</title><path d="M0 128C0 92.7 28.7 64 64 64H320c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128zM559.1 99.8c10.4 5.6 16.9 16.4 16.9 28.2V384c0 11.8-6.5 22.6-16.9 28.2s-23 5-32.9-1.6l-96-64L416 337.1V320 192 174.9l14.2-9.5 96-64c9.8-6.5 22.4-7.2 32.9-1.6z"></path></svg> recording</a></p></li>
+</ul>
+</section>
+<section id="met-dank-aan" class="level2">
+<h2 class="anchored" data-anchor-id="met-dank-aan"><svg aria-label="People Carry Box" role="img" viewbox="0 0 640 512" style="height:1em;width:1.25em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>People Carry Box</title><path d="M80 48a48 48 0 1 1 96 0A48 48 0 1 1 80 48zm64 193.7v65.1l51 51c7.1 7.1 11.8 16.2 13.4 26.1l15.2 90.9c2.9 17.4-8.9 33.9-26.3 36.8s-33.9-8.9-36.8-26.3l-14.3-85.9L66.8 320C54.8 308 48 291.7 48 274.7V186.6c0-32.4 26.2-58.6 58.6-58.6c24.1 0 46.5 12 59.9 32l47.4 71.1 10.1 5V160c0-17.7 14.3-32 32-32H384c17.7 0 32 14.3 32 32v76.2l10.1-5L473.5 160c13.3-20 35.8-32 59.9-32c32.4 0 58.6 26.2 58.6 58.6v88.1c0 17-6.7 33.3-18.7 45.3l-79.4 79.4-14.3 85.9c-2.9 17.4-19.4 29.2-36.8 26.3s-29.2-19.4-26.3-36.8l15.2-90.9c1.6-9.9 6.3-19 13.4-26.1l51-51V241.7l-19 28.5c-4.6 7-11 12.6-18.5 16.3l-59.6 29.8c-2.4 1.3-4.9 2.2-7.6 2.8c-2.6 .6-5.3 .9-7.9 .8H256.7c-2.5 .1-5-.2-7.5-.7c-2.9-.6-5.6-1.6-8.1-3l-59.5-29.8c-7.5-3.7-13.8-9.4-18.5-16.3l-19-28.5zM2.3 468.1L50.1 348.6l49.2 49.2-37.6 94c-6.6 16.4-25.2 24.4-41.6 17.8S-4.3 484.5 2.3 468.1zM512 0a48 48 0 1 1 0 96 48 48 0 1 1 0-96zm77.9 348.6l47.8 119.5c6.6 16.4-1.4 35-17.8 41.6s-35-1.4-41.6-17.8l-37.6-94 49.2-49.2z"></path></svg> Met dank aan</h2>
+<p>Veel van de geweldige inhoud en tips hier zijn geleend/aangepast van de workshop van <a href="https://allisonhorst.github.io/">Allison Horst</a>, <a href="https://docs.google.com/document/d/1c0SZiVvp32UTJ9sK_yVjI8ou6pVdFRXsY2236tiTA1c/edit">Getting started with <code>distill</code> sites</a> – bekijk deze als je de <code>{distill}</code> route wilt gaan volgen! Veel dank aan <a href="https://github.com/jimgar/jimgar">Jim Gardner</a>, die super nuttige feedback gaf over de flexibiliteit van Quarto’s commandoregel tools. En natuurlijk veel dank aan iedereen die dit materiaal heeft gedeeld met collega’s, online, etc. – Het is verbazingwekkend om zoveel aanmoedigingen te ontvangen als mensen hun nieuwe Quarto sites delen. <svg aria-label="Face Smile Beam" role="img" viewbox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>Face Smile Beam</title><path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm177.6 62.1C192.8 334.5 218.8 352 256 352s63.2-17.5 78.4-33.9c9-9.7 24.2-10.4 33.9-1.4s10.4 24.2 1.4 33.9c-22 23.8-60 49.4-113.6 49.4s-91.7-25.5-113.6-49.4c-9-9.7-8.4-24.9 1.4-33.9s24.9-8.4 33.9 1.4zm40-89.3l0 0 0 0-.2-.2c-.2-.2-.4-.5-.7-.9c-.6-.8-1.6-2-2.8-3.4c-2.5-2.8-6-6.6-10.2-10.3c-8.8-7.8-18.8-14-27.7-14s-18.9 6.2-27.7 14c-4.2 3.7-7.7 7.5-10.2 10.3c-1.2 1.4-2.2 2.6-2.8 3.4c-.3 .4-.6 .7-.7 .9l-.2 .2 0 0 0 0 0 0c-2.1 2.8-5.7 3.9-8.9 2.8s-5.5-4.1-5.5-7.6c0-17.9 6.7-35.6 16.6-48.8c9.8-13 23.9-23.2 39.4-23.2s29.6 10.2 39.4 23.2c9.9 13.2 16.6 30.9 16.6 48.8c0 3.4-2.2 6.5-5.5 7.6s-6.9 0-8.9-2.8l0 0 0 0zm160 0l0 0-.2-.2c-.2-.2-.4-.5-.7-.9c-.6-.8-1.6-2-2.8-3.4c-2.5-2.8-6-6.6-10.2-10.3c-8.8-7.8-18.8-14-27.7-14s-18.9 6.2-27.7 14c-4.2 3.7-7.7 7.5-10.2 10.3c-1.2 1.4-2.2 2.6-2.8 3.4c-.3 .4-.6 .7-.7 .9l-.2 .2 0 0 0 0 0 0c-2.1 2.8-5.7 3.9-8.9 2.8s-5.5-4.1-5.5-7.6c0-17.9 6.7-35.6 16.6-48.8c9.8-13 23.9-23.2 39.4-23.2s29.6 10.2 39.4 23.2c9.9 13.2 16.6 30.9 16.6 48.8c0 3.4-2.2 6.5-5.5 7.6s-6.9 0-8.9-2.8l0 0 0 0 0 0z"></path></svg>.</p>
+</section>
+<section id="bijdrage" class="level2">
+<h2 class="anchored" data-anchor-id="bijdrage"><svg aria-label="Code Pull Request" role="img" viewbox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>Code Pull Request</title><path d="M305.8 2.1C314.4 5.9 320 14.5 320 24V64h16c70.7 0 128 57.3 128 128V358.7c28.3 12.3 48 40.5 48 73.3c0 44.2-35.8 80-80 80s-80-35.8-80-80c0-32.8 19.7-61 48-73.3V192c0-35.3-28.7-64-64-64H320v40c0 9.5-5.6 18.1-14.2 21.9s-18.8 2.3-25.8-4.1l-80-72c-5.1-4.6-7.9-11-7.9-17.8s2.9-13.3 7.9-17.8l80-72c7-6.3 17.2-7.9 25.8-4.1zM104 80A24 24 0 1 0 56 80a24 24 0 1 0 48 0zm8 73.3V358.7c28.3 12.3 48 40.5 48 73.3c0 44.2-35.8 80-80 80s-80-35.8-80-80c0-32.8 19.7-61 48-73.3V153.3C19.7 141 0 112.8 0 80C0 35.8 35.8 0 80 0s80 35.8 80 80c0 32.8-19.7 61-48 73.3zM104 432a24 24 0 1 0 -48 0 24 24 0 1 0 48 0zm328 24a24 24 0 1 0 0-48 24 24 0 1 0 0 48z"></path></svg> Bijdrage</h2>
+<p><strong>Update, April 2023:</strong> Ik heb veel geleerd over Quarto in de afgelopen ruim 9 maanden en ik blijf regelmatig nieuwe dingen ontdekken! Als je suggesties hebt voor het corrigeren, verbeteren of uitbreiden van deze instructies, voel je dan vrij om <a href="https://github.com/UCSB-MEDS/creating-quarto-websites/issues/new">een probleem in te dienen op <svg aria-label="GitHub" role="img" viewbox="0 0 496 512" style="height:1em;width:0.97em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>GitHub</title><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg> GitHub</a>. Als alternatief kunt u deze repository forken, voorgestelde wijzigingen aanbrengen en een pull request indienen – als u deze route wilt volgen, vraag ik u eerst een probleem te openen om uw ideeën met mij te bespreken.<svg aria-label="Face Smile" role="img" viewbox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#5A5A5A;overflow:visible;position:relative;"><title>Face Smile</title><path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm177.6 62.1C192.8 334.5 218.8 352 256 352s63.2-17.5 78.4-33.9c9-9.7 24.2-10.4 33.9-1.4s10.4 24.2 1.4 33.9c-22 23.8-60 49.4-113.6 49.4s-91.7-25.5-113.6-49.4c-9-9.7-8.4-24.9 1.4-33.9s24.9-8.4 33.9 1.4zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm192-32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path></svg>.</p>
+<p><br></p>
+<p><span style="color: #959494;"><em><strong>Laatste keer ververst:</strong> May 1, 2023</em></span></p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

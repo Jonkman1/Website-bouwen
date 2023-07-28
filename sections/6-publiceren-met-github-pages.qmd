@@ -1,0 +1,75 @@
+---
+format: html
+---
+
+## `r fontawesome::fa("github", fill = "#5A5A5A", a11y = "sem")` Jouw site bouwen & publiceren met GitHub Pages
+
+Er zijn [veel opties om je website te publiceren](https://quarto.org/docs/websites/publishing-websites.html). Wij zullen de [GitHub Pages-optie](https://quarto.org/docs/websites/publishing-websites.html#github-pages) gebruiken, waarmee je een website vanuit elke GitHub repository kunt publiceren. Om dit te doen, zijn er een paar configuratiestappen:
+
+1.   Maak een bestand met de naam `.nojekyll` in je repository, wat nodig is om sommige bewerkingen van HTML bestanden uit te schakelen die GitHub standaard doet. Doe dit vanuit je **terminal** (je kunt de terminal tab in RStudio gebruiken of een apart terminal venster -- zorg ervoor dat je in de juiste directory zit) met het volgende commando:
+
+```{bash}
+#| eval: false
+touch .nojekyll
+```
+
+::: callout-note
+The `touch` command creates a new, empty file.
+
+`.nojekyll` is een *verborgen* bestand dat niet zichtbaar in jouw map staat. Je *zou* het moeten zien verschijnen als een bestand om te volgen met git onder de **Git** tab in RStudio. Je kunt verborgen bestanden ook bekijken in Finder (Mac) met de sneltoets `Command` + `Shift` + `.`, of volg [deze instructies](https://support.microsoft.com/en-us/windows/show-hidden-files-0320fe58-0117-fd59-6851-9b7f9840fdb2) voor Windows 10, 8.1, en 7.
+:::
+
+2.  Zet de `output-dir` in jouw `_quarto.yml` file op "docs" (dat kun je het makkelijkste doen vanuit RStudio):
+
+```{r}
+#| eval: false
+---
+project:
+  type: website
+  output-dir: docs
+  
+# ~ additional metadata excluded for brevity ~
+---
+```
+
+::: callout-note
+De `output-dir` is de map waar jouw gerenderde `.html` (en andere belangrijke) bestanden automatisch worden opgeslagen wanneer jij jouw website "bouwt" (zie de volgende stap!) -- dat wil zeggen, wanneer je al je `.qmd` bestanden omzet naar de `.html` bestanden die jouw webbrowser kan interpreteren/weergeven. 
+:::
+
+3.  Maak jouw site door te klikken op de tab **Build** (kwadrant rechtsboven in RStudio) en vervolgens op **Render Website.** Je zou een minimale, zij het functionele, website moeten zien verschijnen in de tab **Viewer**. Klik op de <img src="media/view_in_browser.png" alt="Een browservenster met daaroverheen een pijl die omhoog wijst en naar rechts is gekanteld." style="display: inline-block; margin: 0; position: relative; top: 0px; width:25px;height:20px;"/> knop om je bestand te openen in je webbrowser. **Noot:** je website wordt momenteel gehost op je lokale machine, niet op een doorzoekbare URL. Maar dat komt binnenkort wel!
+
+
+```{r}
+#| echo: false
+#| fig-align: center
+knitr::include_graphics("media/build_site.png")
+```
+
+4.  Nu moeten we alle bestanden in onze lokale git repository naar onze remote GitHub repository sturen:
+
+      a.  **Stage** jouw bestanden door alle vakjes in de **Git** tab aan te vinken (*dit is analoog aan het `git add .` commando dat in de Terminal wordt gebruikt om alle bestanden te stagen*) 
+      b.  **commit** jouw bestanden door op de commit knop te klikken, een commit bericht toe te voegen en op "commit" te klikken (*analoog aan `git commit -m "my commit message"`*) 
+      c. **Push** jouw bestanden naar de remote repository (op GitHub) door op de "Push" knop met de groene naar boven gerichte pijl te klikken (*analoog aan `git push`*).
+
+
+5.  Configureer GitHub pagina's om inhoud van de "docs" map te serveren door te klikken op de **Settings** tab in de bovenste menubalk, dan **Pages** tab in de linker menubalk. Zorg ervoor dat Branch is ingesteld op `main` en dat de geselecteerde map is ingesteld op `/docs`. Klik op "Save". Eenmaal uitgerold (dit kan een paar minuten duren), zal de URL van je website verschijnen in een box bovenaan de pagina (het kan zijn dat je een paar keer moet proberen te vernieuwen). 
+
+```{r}
+#| echo: false
+#| layout-ncol: 2
+#| column: page
+#| fig-subcap: 
+#|  - "De URL van onze website zal bovenaan de pagina verschijnen als je GitHub Pages hebt geconfigureerd om je Quarto site te transporteren"
+#|  - "De Quarto website is uitgezet! Nu is het tijd om de website aan te passen en de inhoud toe te voegen."
+knitr::include_graphics("media/gh_pages.png")
+knitr::include_graphics("media/rendered_site.png")
+```
+
+::: callout-tip
+## Bekijk de **Actions** tab op GitHub om de deployment status te bekijken. Zie de deployment status, de tijd van elke deployment, en hoe lang het duurde om elke run te deployen. Je kunt hier ook mislukte implementaties vinden (ja, dat gebeurt soms) en actie ondernemen om ze te repareren.
+
+```{r}
+#| echo: false
+knitr::include_graphics("media/actions_tab.png")
+```
+:::

@@ -1,0 +1,7 @@
+---
+format: html
+---
+
+## `r fontawesome::fa("code-pull-request", fill = "#5A5A5A", a11y = "sem")` Bijdrage
+
+**Update, April 2023:** Ik heb veel geleerd over Quarto in de afgelopen ruim 9 maanden en ik blijf regelmatig nieuwe dingen ontdekken! Als je suggesties hebt voor het corrigeren, verbeteren of uitbreiden van deze instructies, voel je dan vrij om [een probleem in te dienen op `r fontawesome::fa("github", fill = "#5A5A5A", a11y = "sem")` GitHub](https://github.com/UCSB-MEDS/creating-quarto-websites/issues/new). Als alternatief kunt u deze repository forken, voorgestelde wijzigingen aanbrengen en een pull request indienen -- als u deze route wilt volgen, vraag ik u eerst een probleem te openen om uw ideeën met mij te bespreken.`r fontawesome::fa("face-smile", fill = "#5A5A5A", a11y = "sem")`.

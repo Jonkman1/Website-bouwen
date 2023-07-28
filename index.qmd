@@ -1,0 +1,44 @@
+---
+title: "Eigen website maken met Quarto"
+author: Sam Csik, bewerking Harrie Jonkman
+date: August 5, 2023
+format: 
+  html:
+    theme: minty
+    toc: true
+    toc-location: left
+    toc-depth: 2
+---
+
+{{< include /sections/0-inleiding.qmd >}}
+
+{{< include /sections/1-wat-is-quarto.qmd >}}
+
+{{< include /sections/2-heb-ik-quarto-nodig.qmd >}}
+
+{{< include /sections/3-basis-leggen.qmd >}}
+
+::: panel-tabset
+:::
+## **`r fontawesome::fa("terminal", fill = "#5A5A5A", a11y = "sem")` Via de commandolijn**
+
+{{< include /sections/4-commando-lijn.qmd >}}
+
+## **`r fontawesome::fa("r-project", fill = "#5A5A5A", a11y = "sem")` Met RStudio IDE**
+
+{{< include /sections/5-RStudio.qmd >}}
+:::
+
+{{< include /sections/6-publiceren-met-github-pages.qmd >}}
+
+{{< include /sections/7-zaken-veranderen.qmd >}}
+
+{{< include /sections/8-vooruit-kijken.qmd >}}
+
+{{< include /sections/9-met-dank-aan.qmd >}}
+
+{{< include /sections/10-contribute.qmd >}}
+
+<br>
+
+[***Laatste keer ververst:** May 1, 2023*]{style="color: #959494;"}

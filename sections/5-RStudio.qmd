@@ -1,0 +1,105 @@
+---
+format: html
+---
+
+### **Waarom RStudio gebruiken om jouw website op te zetten?**
+
+-   Het is *super* eenvoudig om dit te doen met een klik op slechts een paar knoppen! **Onthoud**, de commando's die we intypen in ons terminalvenster (zoals hiervoor beschreven) liggen ten grondslag aan de knoppen waarop we klikken in de RStudio IDE -- RStudio biedt gewoon een gebruiksvriendelijke interface voor het uitvoeren van die commando's.
+
+### **Stappen:**
+
+1.   Open RStudio en klik op de knop ![Links staat een blauwe kubus met 'R' in het midden. Aan de rechterkant staan de woorden 'Project: (Geen)' in het wit, met een pijl naar beneden die een keuzemenu aangeeft](media/project.png){alt="Aan de linkerkant staat een blauwe kubus met 'R' in het midden. Aan de rechterkant staan de woorden 'Project: (None)' in het wit, met een naar beneden gerichte pijl die een keuzemenu aangeeft" style="display: inline-block; margin: 0; position: relative; top: 0px; width:80px;height:18px;"} knop in de rechterbovenhoek. Selecteer: **New Project...**
+
+```{r}
+#| echo: false
+#| fig-align: center
+knitr::include_graphics("media/vRStudio1.png")
+```
+
+2.  Klik op **New Directory**, dan **Quarto Website**
+
+```{r}
+#| echo: false
+#| layout-ncol: 2
+#| column: page
+knitr::include_graphics("media/vRStudio2.png")
+knitr::include_graphics("media/vRStudio3.png")
+```
+
+3.  Vul het **Directory name:** veld in (dit is de naam van jouw R project en uiteindelijk de naam van jouw GitHub repo) en kies waar je je directory wilt opslaan met de **Browse** knop. Klik op **Create Project**.
+
+::: {.callout-important}
+## Noem jouw project **jouwgebruikersnaam.github.io** als je van plan bent om GitHub-pages te gaan gebruiken. Omdat we GitHub pagina's gaan gebruiken om onze websites te publiceren/hosten, wordt dat aanbevolen (je mag **één** gebruikerswebsite aanmaken met het **github. io** suffix) -- bijvoorbeeld, [het project/GitHub repository](https://github.com/samanthacsik/samanthacsik.github.io), dat de code bevat voor [mijn persoonlijke website](https://samanthacsik.github.io/), heet **samanthacsik.github.io**. Geef het anders een redelijke naam (dit wordt de [slug](https://developer.mozilla.org/en-US/docs/Glossary/Slug) voor je site als je met GitHub pagina's publiceert, dus kies zorgvuldig). Ik noem mijn project **mysite** *alleen voor instructiedoeleinden* -- je zou het jouwe zeker een meer praktische/creatieve naam moeten geven.
+:::
+
+::: {.callout-tip}
+## Organiseren van R projecten / git repositories
+Er zijn veel verschillende meningen over hoe je je R projecten/git repositories moet organiseren op je computer. Persoonlijk sla ik al mijn projecten op in een map genaamd `git` in de thuismap van mijn computer (bijvoorbeeld `Users/samanthacsik/git/`) zodat alles op één plek staat.
+:::
+
+```{r}
+#| echo: false
+#| fig-align: center
+knitr::include_graphics("media/vRStudio4.png")
+```
+
+-   Je zou nu een map moeten zien met de naam `mysite` (of hoe u uw Quarto project ook genoemd heeft) met een serie bestanden (`_quarto.yml`, `about.qmd`, `index.qmd`, `styles.css`) die de steiger vormen voor jouw website in het **Files** tabblad (in het paneel rechtsonder in RStudio, als u de indeling van het deelvenster niet veranderd heeft).
+
+```{r}
+#| echo: false
+#| fig-align: center
+#knitr::include_graphics("media/mysite_scaffolding.png")
+```
+
+4.  Je hebt nu een map gemaakt met de website-basisbestanden, maar het wordt nog niet gevolgd door git, noch is het verbonden met een remote repository op GitHub. Om dit op te zetten, installeer je eerst het [`{usethis}`](https://usethis.r-lib.org/index.html) pakket als je dat nog niet hebt.
+
+
+```{r}
+#| eval: false
+install.packages("usethis")
+```
+
+5.  Voer in de Console (terwijl je in je website project in RStudio zit) `usethis::use_git()` uit om een lokale git repo aan te maken. Kies ja als je wordt gevraagd of het goed is om ongecommitteerde bestanden vast te leggen. Als gevraagd wordt om R opnieuw te starten, kies dan ja. Eenmaal klaar zou je het **Git** tabblad moeten zien verschijnen in je linker bovenvenster in RStudio.
+
+
+
+```{r}
+#| echo: false
+#| fig-align: center
+knitr::include_graphics("media/mysite_scaffolding_git.png")
+```
+
+::: {.callout-note}
+## `{usethis}` is een pakket dat interactieve workflows faciliteert voor het maken en ontwikkelen van R projecten. We gebruiken de `{usethis}` workflow hier omdat het een super handig pakket is om te beginnen met het leren voor het opzetten van projecten. Echter, in plaats van de `usethis::use_git()` functie hier te gebruiken om je lokale git repo aan te maken, had je ook het vakje kunnen aanvinken waar staat **Create a git repository** bij het opzetten van je Quarto website (zie stap 3 hierboven).
+:::
+
+6.  Voer dan in de Console `usethis::use_github()` uit om een upstream remote repository aan te maken (d.w.z. GitHub repo). Jouw web browser zou moeten openen naar je nieuwe GitHub repository, met dezelfde naam als je lokale git repo/R project.
+
+::: {.callout-note}
+## Git vs. Github 
+[*Git*](https://git-scm.com/) is een versiebeheersysteem waarmee je de geschiedenis van versiebeheer van jouw bestanden kunt beheren en bijhouden, terwijl [*GitHub*](https://github.com/) een cloud-gebaseerde hostingdienst is waarmee je Git repositories kunt beheren. Zoals Jenny Bryan beschrijft in haar boek [Happy Git and GitHub for the useR](https://happygitwithr.com/index.html), hosting diensten zoals GitHub *"bieden een thuis voor jouw Git-gebaseerde projecten op het internet."* Deze diensten helpen niet alleen om samenwerking te vergemakkelijken, maar ze beschermen je ook in het geval dat je computer plotseling kapot gaat -- "kloon" gewoon je GitHub repository terug naar je nieuwe computer en voila! Je kunt meteen verder waar je gebleven was.
+:::
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| fig-cap: "After running `usethis::use_github()` your browser window should open up to your new GitHub repository and look similar to the browser above."
+knitr::include_graphics("media/mysite_remote.png")
+```
+
+7.  Laten we vervolgens de naam van onze standaard branch controleren -- dat is de branch waar alle wijzigingen uiteindelijk in worden samengevoegd (als je een website bouwt, is dit meestal de branch die je wilt implementeren). Er zijn meerdere manieren om dit te controleren -- hier zijn twee eenvoudige opties:
+
+    a. open je Terminal-venster vanuit RStudio en typ `git status` -- de eerste regel die verschijnt moet zijn **`Op branch <branch_name>``**. 
+    
+    b. klik op de **Git** tab in het rechter bovenvenster van RStudio. Naast de ![Een witte ruit met twee paarse vierkanten, een direct boven en een direct rechts, verbonden met de ruit door een lijn.](media/branch.png){alt="Een witte ruit met twee paarse vierkanten, een direct boven en een direct rechts, verbonden met de ruit door een lijn." style="display: inline-block; margin: 0; position: relative; top: 0px; width:20px;height:18px;"} symbool, je zou een dropdown menu moeten zien met de naam van je huidige tak.
+    
+    
+-   **Als je huidige branch *`master`* heet, volg dan stap 8 hieronder.** *Waarom? * De racistische "master" terminologie voor git branches motiveert ons om onze standaard branch te updaten naar "main". Als je branch *`main`* heet, dan kun je aan de slag! Je kunt doorgaan naar het volgende gedeelte, [Publiceer je site met GitHub Pages](https://ucsb-meds.github.io/creating-quarto-websites/#publish-your-site-with-github-pages).
+
+::: {.callout-note}
+## De volgorde van handelen kan bepalen of je standaard branch `main` of `master` heet Als je eerst een repo aanmaakt in *GitHub*, dan is de standaard nu bijgewerkt om de standaard branch `main` te maken. Maar, als je eerst een *lokale git repository* maakt (zoals we hier gedaan hebben), dan moet je misschien je standaard branchnaam bijwerken naar `main` (afhankelijk van je versie van Git en de configuratie-instellingen).
+:::
+
+8.   Laten we onze standaard branchnaam veranderen van `master` naar `main`. Voer in de console `usethis::git_default_branch_rename(from = "master", to = "main")` uit om je standaard branchnaam te updaten. Bevestig dat het **(a)** lokaal bijgewerkt is door opnieuw `git status` in je Terminal uit te voeren -- de eerste afgedrukte regel zou nu moeten luiden, `Op branch main`, en **(b)** op je remote door je GitHub repo te verversen (in je web browser) -- je zou de bijgewerkte standaard branchnaam bovenaan je repo moeten zien.
+
+{{< include /sections/NOTE.qmd >}}

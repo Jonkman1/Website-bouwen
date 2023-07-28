@@ -1,0 +1,7 @@
+---
+format: html
+---
+
+## `r fontawesome::fa("people-carry-box", fill = "#5A5A5A", a11y = "sem")` Met dank aan
+
+Veel van de geweldige inhoud en tips hier zijn geleend/aangepast van de workshop van [Allison Horst](https://allisonhorst.github.io/), [Getting started with `distill` sites](https://docs.google.com/document/d/1c0SZiVvp32UTJ9sK_yVjI8ou6pVdFRXsY2236tiTA1c/edit) -- bekijk deze als je de `{distill}` route wilt gaan volgen! Veel dank aan [Jim Gardner](https://github.com/jimgar/jimgar), die super nuttige feedback gaf over de flexibiliteit van Quarto's commandoregel tools. En natuurlijk veel dank aan iedereen die dit materiaal heeft gedeeld met collega's, online, etc. -- Het is verbazingwekkend om zoveel aanmoedigingen te ontvangen als mensen hun nieuwe Quarto sites delen. `r fontawesome::fa("face-smile-beam", fill = "#5A5A5A", a11y = "sem")`.

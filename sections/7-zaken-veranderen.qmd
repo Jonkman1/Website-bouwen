@@ -1,0 +1,204 @@
+---
+format: html
+---
+
+## `r fontawesome::fa("edit", fill = "#5A5A5A", a11y = "sem")` Waar moet ik beginnen om zaken te veranderen?
+
+Op dit moment is onze website gebouwd met de standaardstyling van Quarto. Laten we eens kijken waar dingen staan en hoe we kunnen beginnen met het aanpassen van sommige dingen.
+
+### {{< fa arrow-right title="An arrow pointing to the right" >}} **Knoei niet met dingen in `/docs`** 
+
+Wanneer jij jouw site rendert (door te klikken op Build > Render Website), neemt Quarto al je `.qmd` bestanden, converteert ze naar `.html` bestanden (samen met wat andere belangrijke dingen) en slaat alles op in jouw `/docs` map. Jouw site wordt vanuit deze map geïnstalleerd, dus je wilt hier echt niets direct veranderen.
+
+### {{< fa arrow-right title="An arrow pointing to the right" >}} **Inhoud toevoegen aan jouw basispagina (`index.qmd`)**
+
+Onthoud: `index.qmd` is de pagina waarop mensen terechtkomen als ze naar jouw website navigeren -- geef deze basispagina/homepage een opknapbeurt door een aantal van de volgende dingen uit te proberen:
+
+  - Werk de yaml `titel` in je `index.qmd` bestand bij. Hier heb ik de mijne veranderd van "mysite" naar mijn naam, "Samantha Csik" 
+  
+  - Verwijder de voorbeeldtekst en begin met het toevoegen van jouw eigen inhoud -- een goede plek om te beginnen is een korte beschrijving waarin je jezelf voorstelt!
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| fig-cap: "De startpagina van mijn Quarto website, die nu mijn naam en wat inhoud bevat, maar visueel nog niet heel aantrekkelijk is..."
+knitr::include_graphics("media/no_about_page.png")
+```
+
+### {{< fa arrow-right title="An arrow pointing to the right" >}} **Maak van jouw basispagina (`index.qmd`) een "[Over Pagina](https://quarto.org/docs/websites/website-about.html)" met een foto**
+
+Wanneer de `over` optie is toegevoegd aan de yaml van een document, wordt een speciaal sjabloon gebruikt om de inhoud van die pagina op te maken. Kies uit een van Quarto's vijf [ingebouwde sjablonen] (https://quarto.org/docs/websites/website-about.html#templates), elk met een iets andere opmaakstijl. Enkele yaml opties om mee te spelen:
+
+  -   `template`: kies uit Quarto's ingebouwde templateopties;
+
+  -   `image` (*merk op dat dit een optie is op documentniveau*, dus geen sub-item van `over`): geef het bestandspad naar je foto op
+
+  -   `image-width` & `image-shape`: pas de grootte en vorm van je afbeelding aan (`round`, `rounded`, `rectangle`)
+
+  -   `links`: knoppen toevoegen met links naar je sociale mediapagina's
+
+```{r filename="index.qmd"}
+#| eval: false
+---
+title: "Samantha Csik"
+image: headshot.jpg # <1>
+about: 
+  template: trestles # <2>
+  image-shape: round # <3>
+  image-width: 23em # <3>
+  links: # <4>
+    - text: LinkedIn # <4>
+      href: https://www.linkedin.com/in/samanthacsik/ # <4>
+    - text: Twitter # <4>
+      href: https://twitter.com/SamanthaCsik # <4>
+    - text: GitHub # <4>
+      href: https://github.com/samanthacsik # <4>
+    - text: Email # <4>
+      href: mailto:scsik@ucsb.edu # <4>
+---
+        
+# pagina-inhoud weggelaten voor beknoptheid  ~
+```
+1. voeg een foto toe door een bestandspad en afbeeldingsnaam op te geven (hier staat `headshot.jpg` in de hoofdmap van mijn repo).  
+2. gebruik een [vooraf gebouwd sjabloon](https://quarto.org/docs/websites/website-about.html#templates) (hier, `trestles`) om de lay-out van je basispagina (of welke pagina dan ook!) bij te werken   
+3. stel de afbeeldingsvorm in (`rond`, `afgerond`, `rechthoek`) & de grootte   
+4. voeg button links toe naar je favoriete social media pagina's (bijv. LinkedIn, Twitter, GitHub, en zelfs je email -- **Noot:** de `mailto::` voor je email adres, `mailto::youremail.com`)
+
+
+::: column-margin
+**Aardigheidje:** Installeer de [Font Awesome Extension for Quarto](https://github.com/quarto-ext/fontawesome) om gratis [Font Awesome](https://fontawesome.com/) `r fontawesome::fa("font-awesome", fill = "#5A5A5A", a11y = "sem")` pictogrammen aan jouw site toe te voegen! Zorg ervoor dat je de [`icon` optie](https://quarto.org/docs/websites/website-about.html#links) bekijkt wanneer u gekoppelde knoppen toevoegt aan uw Over pagina.
+:::
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Sems Quarto website na het bijwerken van haar basispagina met het ingebouwde `trestles` sjabloon, het toevoegen van een afbeelding en gekoppelde knoppen. (**Aantekening:** Het gebruik van drie streepjes, `---`, creëert een paginascheiding, zoals te zien is tussen secties in de schermafbeelding hierboven). Al met al een grote verbetering! Onze tekst is echter een beetje geplet in het midden van de pagina -- dat lossen we in de volgende stap op."
+knitr::include_graphics("media/about_page.png")
+```
+
+::: callout-note
+## Quarto ondersteunt het maken van volledig aangepaste pagina-lay-outs -- maar ik raad aan om bij een template te blijven als je begint. Quarto's ingebouwde [Over Pagina templates](https://quarto.org/docs/websites/website-about.html#templates) zijn geweldig om een paar redenen, voornamelijk:   
+1. ze bieden een snelle en gemakkelijke manier om visueel aantrekkelijke webpagina's te maken (met name website basispagina's).   
+2. ze zorgen voor veel van de lastige "onder de motorkap" styling (bijvoorbeeld het creëren van "responsive" pagina-elementen, d.w.z. automatisch de inhoud herschikken om te passen bij veranderende viewport-formaten) die anders een behoorlijke dosis [CSS](https://quarto.org/docs/websites/website-about.html#templates) kennis zou vereisen. Bijvoorbeeld het maken van "responsieve" pagina-elementen. 
+
+Naarmate u meer vertrouwd raakt met het Quarto raamwerk en CSS voor het stylen van webpagina's (we leren hier allicht meer over in een latere blog), kunt je besluiten om een volledig aangepaste webpagina lay-out te maken. U kunt de [Quarto documentatie](https://quarto.org/docs/output-formats/page-layout.html) bekijken voor meer informatie.
+:::
+
+### {{< fa arrow-right title="An arrow pointing to the right" >}} **Wijzig het uiterlijk van de website in `_quarto.yml`** 
+
+Het bestand `_quarto.yml` is een configuratiebestand -- elk document dat wordt gerenderd in de projectmap zal automatisch de metadata erven die in dit bestand zijn gedefinieerd. Enkele eenvoudige updates die een groot verschil maken:
+
+
+```{.yaml filename="_quarto.yml"}
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Samantha Csik" # <1>
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    page-layout: full # <2>
+```
+
+1. Geef jouw website een betere titel (bijv. jouw naam)! Dit is de tekst die in de linkerbovenhoek van je website verschijnt (standaard is dit de naam van je repo) -- als je erop klikt, wordt een gebruiker teruggebracht naar de basisagina.      
+2. Stel je `page-layout` in op `full` zodat je pagina-inhoud een groter deel van de paginabreedte in beslag neemt
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Sams website met een nieuwe titel (zie linkerbovenhoek) en met `page-layout` ingesteld op `full`, zodat de inhoud niet zo geplet in het midden van de pagina verschijnt."
+knitr::include_graphics("media/full_page.png")
+```
+
+### {{< fa arrow-right title="An arrow pointing to the right" >}} **Voeg meer pagina's toe aan jouw website** 
+
+In het standaard Quarto website skelet, zijn er twee items in de navbar die verschijnen als "Home" en "Over" (**Noot:** verwar de speciaal opgemaakte "Over pagina" die we hebben gemaakt in `index.qmd` niet met de navbar pagina met de huidige titel "Over"). Deze navbar tabs linken naar twee `.html` bestanden (`index.html` en `about.html`) en worden automatisch gerenderd wanneer je naar `/docs` bouwt (je hoeft ze dus niet handmatig te knopen om de html te maken). Het toevoegen van een nieuwe pagina aan je website vereist twee stappen:   
+a. **Maak een nieuw `.qmd` bestand** (New File \> Quarto Document en sla het op in de hoofdmap van je project) en voeg de inhoud toe die je op die pagina wilt hebben. Hier maak ik een nieuwe pagina genaamd "Al mijn favoriete bronnen!" en sla het op in mijn hoofdmap als `resources.qmd`. b. **Update `_quarto.yml`** door je nieuwe `.qmd` toe te voegen aan de lijst van navbar pagina's. Het `_quarto.yml` bestand van mijn website ziet er nu zo uit:
+
+
+```{.yaml filename="_quarto.yml"}
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Samantha Csik"
+  navbar:
+   background: primary
+   left:
+     - href: index.qmd
+       text: Home
+     - about.qmd
+     - resources.qmd  # <1>
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+
+editor: visual
+```
+
+1. Een nieuw toegevoegde navbarpagina. **Noot:** De naam van de pagina, zoals die verschijnt in de navigatiebalk van jouw website, zal hetzelfde zijn als wat er staat in het `title` veld van de yaml van dat bestand. Ik heb bijvoorbeeld `title: "Al mijn favoriete bronnen!"` in de yaml van `resources.qmd` -- dit is hoe het zal verschijnen in de navigatiebalk van mijn website. Als je wilt dat de paginanaam anders wordt weergegeven in de navigatiebalk, gebruik dan de `href` en `text` opties samen (zie bijvoorbeeld hoe `index.qmd` wordt weergegeven als `Home` in de navigatiebalk van mijn website).
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Een nieuwe toegevoegde navigatiebalktitel, met de titel 'Al mijn favoriete bronnen!'"
+knitr::include_graphics("media/resources_page.png")
+```
+
+## {{< fa arrow-right title="An arrow pointing to the right" >}} **Verander het thema** 
+
+Werk het uiterlijk van jouuw site bij door te kiezen uit een van de 25 voorgedefinieerde [Bootswatch-thema's](https://bootswatch.com/). Standaard worden Quarto sites gebouwd met het [cosmo](https://bootswatch.com/cosmo/) thema. Geef slechts één themanaam op in de `theme` optie in uw `_quarto.qmd` bestand:
+
+```{.yaml filename="_quarto.yml"}
+# ~ additional metadata excluded for brevity ~
+
+# supplying just one theme ("minty")
+format:
+  html:
+    theme: minty
+    css: styles.css
+```
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Met thema, 'minty', een voorgebouwd [Bootswatch thema](https://bootswatch.com/)"
+knitr::include_graphics("media/light.png")
+```
+
+*of* zowel een donker als een licht thema leveren waar gebruikers tussen kunnen wisselen:
+
+```{.yaml filename="_quarto.yml"}
+# ~ additional metadata excluded for brevity ~
+
+# supplying a light ("minty") and dark ("slate") theme to toggle between
+format:
+  html:
+    theme: 
+      light: minty
+      dark: slate
+    css: styles.css
+```
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| fig-cap: "Met licht/donker thema-opties toegepast; hier is het `donkere` thema, dat is ingesteld op het voorgebouwde [Bootswatch thema](https://bootswatch.com/) thema, `slate`, ingeschakeld."
+knitr::include_graphics("media/dark.png")
+```
+
+::: callout-important
+## "Render Website" altijd voordat je veranderingen die je wilt uitrollen pushed! Je *moet* **Render Website** (onder de **Build** tab) voordat je toegevoegde/gewijzigde bestanden naar GitHub pushed als je die veranderingen bijgewerkt wilt zien op je site. Alleen individuele bestanden renderen zal niet werken.
+:::

@@ -1,0 +1,239 @@
+---
+format: html
+---
+
+### **4. Waarom de commando lijn gebruiken om jouw website op te zetten?**
+
+- Je raakt meer vertrouwd met het werken in een commandoregelinterface (CLI).   
+- Je kunt met Quarto werken via commando's, ongeacht de taal (R, Python, Julia, ObservableJS) of IDE (**I**ntegrated **D**evelopment **E**nvironment) waarmee je werkt
+
+### **Stappen:**   
+1. Open jouw terminal.   
+2. Bepaal waar jij je bevindt in jouw bestandssysteem met het commando `pwd` (print working directory). Gebruik `cd` (change directory) om door je bestandssysteem te navigeren naar de plek waar je je project wilt hebben
+
+::: {.callout-tip}
+## Organiseer R projecten / git repositories
+Er zijn heel veel opinies over how jij jouw  R projecten/git repositories moet organiseren op jouw computer. Ik bewaar persoonlijk die van mij in een folder `git` in mijn thuismap (b.v. `Users/samanthacsik/git/`) zodat alles zich op een een plaats bevindt.
+:::
+
+3.  Gebruik de volgende commando's om een quarto website project te bouwen in een directory dat de benodigde files bevat voor die website:
+
+::: {.callout-note}
+## Directory == Folder == Map
+In dit document gebruik ik de woorden **directory**, **folder** en **map** door elkaar.
+:::
+
+```{bash}
+#| eval: false
+quarto create-project mysite --type website 
+```
+
+::: {.callout-important}
+## Noem jouw websiteproject **jouwgebruikersnaam.github.io** als je het wilt verspreiden met GitHub pages
+Omdat we GitHub pages gebruiken om onze websites te publiceren/hosten, wordt het aangeraden dat jij jouw project **jouwgebruikersnaam.github.io** noemt (je kunt **één** user website met de **github.io** suffix gebruiken) -- bij voorbeeld, [het project/GitHub repository](https://github.com/samanthacsik/samanthacsik.github.io), die de code bevat voor [mijn persoonlijke website](https://samanthacsik.github.io/), heeft de naam **samanthacsik.github.io**. Anders, geef het een redelijke naam (dit zal de [slug](https://developer.mozilla.org/en-US/docs/Glossary/Slug) worden voor jouw site als je het publiceert met GitHub pages, dus kies het zorgvuldig). Ik kies voor mijn project de naam **mysite** *alleen vanwege pedagogische redenen* -- jij moet die van jou zeker een meer practische/creatieve naam geven.
+:::
+
+```{r}
+#| echo: false
+#| layout-ncol: 2
+#| column: page
+#| fig-subcap: 
+#|  - "Gebruik `pwd` om jouw huidige werkmap te zien. Gebruik `cd` om de directorie te veranderen."
+#|  - "Creëer een nieuw quarto project met `quarto create-project your_project_name --type website` commando's."
+knitr::include_graphics("media/pwd_cd.png")
+knitr::include_graphics("media/CLI_create_website.png")
+```
+
+-   Als jij `cd` in jouw nieuwe `mysite` directory plaatst (of hoe jij je quarto project ook genoemd hebt) en het `ls` commando gebruikt om de inhoud van die directory op te vragen, zou je een serie bestanden moeten zien (`_quarto.yml`, `about.qmd`, `index.qmd`, `styles.css`) die de basis voor jouw website vormen. Bijvoorbeeld:
+
+```{bash}
+#| eval: false
+# print current working directory
+(base) Samanthas-MacBook-Air:git samanthacsik$ pwd 
+/Users/samanthacsik/git
+
+# move into `mysite` directory
+(base) Samanthas-MacBook-Air:git samanthacsik$ cd mysite/ 
+(base) Samanthas-MacBook-Air:mysite samanthacsik$ 
+
+# list out all files in the `mysite` directory
+(base) Samanthas-MacBook-Air:mysite samanthacsik$ ls
+_quarto.yml	_site		about.qmd   index.qmd   styles.css
+```
+
+-   Je kunt ook Finder (Mac) of Windows Explorer (Windows) gebruiken om jouw nieuwe directorie en bestanden te zien.
+
+```{r}
+#| echo: false
+knitr::include_graphics("media/mysite_finder.png")
+```
+
+4.  Je kunt een voorbeeld van je eenvoudige, maar functionele website rechtstreeks vanaf de terminal bekijken door het volgende te typen:
+
+```{bash}
+#| eval: false
+quarto preview mysite
+```
+
+-   De voorvertoning van je site wordt nu geopend in je browser. Verlaat de preview door `control` + `C` op te geven.
+
+::: {.callout-important}
+Je moet het pad naar jouw websitemap opgeven als je een voorbeeld wilt bekijken vanaf een andere locatie. Bijvoorbeeld, als mijn Quarto website directory op `User/samanthacsik/git/mysite` staat, maar ik ben één directory hoger in `User/samanthacsik/git`, dan kan ik `quarto preview mysite` uitvoeren. Als alternatief kan ik het volledige pad `quarto preview User/samanthacsik/git/mysite` of het relatieve pad quarto preview `~/git/mysite` geven, ongeacht in welke map ik me op dat moment bevind.
+:::
+
+5.  Tot nu toe heb je een map aangemaakt, maar die wordt nog niet gevolgd door git. Zorg er eerst voor dat je met `cd` de websitemap kiest. Vervolgens initialiseer je deze map als een git-repository met het `git init` commando in het terminal venster.
+
+```{bash}
+#| eval: false
+git init
+```
+
+
+6.  Laten we nu de naam van onze standaard branch controleren -- dat is de branch waar alle wijzigingen uiteindelijk in worden samengevoegd (als je een website bouwt, is dit meestal de branch die je wilt implementeren). Typ `git status` in je Terminal venster. Je zou iets moeten zien dat hier op lijkt, waarbij de eerste regel je vertelt op welke branch je momenteel zit:
+
+
+```{bash}
+#| eval: false
+(base) Samanthas-MacBook-Air:mysite samanthacsik$ git status
+On branch master
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	.quarto/
+	_quarto.yml
+	_site/
+	about.qmd
+	index.qmd
+	styles.css
+
+nothing added to commit but untracked files present (use "git add" to track)
+```
+
+::: {.callout-note}
+`git status` is een super handig commando dat de status van jouw werkmap en staging gebied laat zien. Ik gebruik dit commando *vaak* als ik met de terminal werk om te controleren of ik echt ben waar ik denk dat ik ben en om de opgegeven, nog niet opgegeven of gewijzigde bestanden te zien. Het is een goede gewoonte om `git status` te draaien na het wisselen van branch of voor/na het toevoegen van bestanden om te committen.
+:::
+
+-   **Als jouw huidige branch `master` heet, volg dan stap 7 hieronder om de naam naar `main` te updaten.** Waarom? De racistische "master" terminologie voor 'git branches' motiveert ons om de default branch naar "main" om te zetten. Als jouw branch al `main` heet, kun je rechtstreeks naar stap 8 gaan.
+
+::: {.callout-note}
+Als je eerst een repo in *GitHub eerst* hebt gemaakt, de standaard is nu geupdate om er de default branch `main` van te maken. Echter, als je *eerst een lokale git repository hebt gemaakt* (zoals we hier hebben gedaan) kan het zijn dat jij jouw default branch `main` hebt genoemd (afhankelijke van de Git-versie en de configuratie-settings die jij hebt).
+:::
+
+7.  Laten we onze standaard branch naam van `master` naar `main` overzetten. Kies jouw workflow gebaseerd op jouw Git versie (controleer jouw versie met `git --version` in jouw Terminal):
+
+::: panel-tabset
+## **`r fontawesome::fa("git-alt", fill = "#5A5A5A", a11y = "sem")` Voor Git versie 2.28 of later**
+
+Je kunt de standaard branch bijwerken naar `main` door de volgende regel in het Terminalvenster in te tikken:
+
+```{bash}
+#| eval: false
+git config --global init.defaultBranch main
+```
+
+***Dit stelt de standaard branchnaam in op `main` voor alle nieuwe repositories die je aanmaakt (het hernoemt geen branches in bestaande projecten).***
+
+Je kunt controleren dat dit werkte door het `git status` commando opnieuw in te typen. De eerste afgedrukte regel zou nu `On branch main` moeten zijn.
+
+::: {.callout-important}
+Houd er rekening mee dat je werkproces voor het updaten van `master` naar `main` er anders uit zal zien als je al zowel een lokale git repo (eerst) EN een upstream remote i.e. GitHub repo (tweede) hebt gemaakt. Kijk naar [deze post](https://gitbetter.substack.com/p/how-to-change-git-default-branch) voor meer info.
+:::
+
+## **`r fontawesome::fa("git-alt", fill = "#5A5A5A", a11y = "sem")` Voor oudere versies van Git**
+
+Hernoem de standaard branch `main` door de volgende regel in het Terminal venster uit te voeren:
+
+```{bash}
+#| eval: false
+git branch -m master main
+```
+
+De`-m` toevoeging wordt gebruikt om jouw branch te hernoemen zonder de branch geschiedenis te beïnvloeden.
+
+***Dit zet de default branch naam op `main` ALLEEN voor deze repository (dus je zult dit moeten doen met alle nieuwe lokale git repositories die je aanmaakt).***
+
+Je kunt controleren of dit werkt door het `git status` commando opnieuw in te typen. De eerste afgedrukte regel zou nu moeten luiden, `On branch main`.
+
+8.  Voeg de bestanden toe in je `mysite` map (*analoog aan het aanvinken van de vakjes naast je bestanden in de RStudio Git tab*)...
+
+```{bash}
+#| eval: false
+# dit voegt alle niet gevolgde of gewijzigde bestanden in één keer toe
+git add . 
+
+# als alternatief kun je alle files individueel toevoegen
+git add <file_name>
+```
+
+::: {.callout-tip}
+Gebruik het `git status` commando opnieuw om te zien of je bestanden succesvol zijn toegevoegd *voordat* je ze vastlegt -- alle niet gevolgde of gewijzigde bestanden die eerst in **rood** werden afgedrukt zouden nu in **groen** moeten verschijnen.
+:::
+
+..en 'commit' ze (leg ze vast() (*analoog aan het drukken op de knop "Vastleggen" in RStudio en het typen van je commitbericht in het pop-up venster*)
+
+```{bash}
+#| eval: false
+git commit -m "initial commit"
+```
+
+9.  Op dit punt heb je een lokale Git repository gemaakt die de basisbestanden bevat die nodig zijn om je Quarto website te bouwen. Nu moeten we een "remote" repository maken (dat wil zeggen een versie van je project die gehost wordt op het internet) op GitHub. Er zijn meerdere manieren om dit te doen, maar we zullen de werkwijze behandelen die voor mij het meest intuïtief werkt. Open/log in op [GitHub](https://github.com/) en [maak een nieuwe repository].(https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository).
+
+::: {.callout-note}
+## **Git vs. Github:** 
+[*Git*](https://git-scm.com/) is een versiebeheersysteem waarmee je de geschiedenis van versiebeheer van je bestanden kunt beheren en bijhouden, terwijl [*GitHub*](https://github.com/) een cloud-gebaseerde hostingdienst is waarmee je Git repositories kunt beheren. Zoals Jenny Bryan beschrijft in haar boek [Happy Git and GitHub for the useR](https://happygitwithr.com/index.html), hosting diensten zoals GitHub *"bieden een thuis voor je Git-gebaseerde projecten op het internet."* Deze diensten helpen niet alleen om samenwerking te vergemakkelijken, maar ze beschermen je ook in het geval dat je computer plotseling kapot gaat -- "kloon" gewoon je GitHub repository terug naar je nieuwe computer en voila! Je kunt meteen verder waar je gebleven was.
+:::
+
+::: {.callout-important}
+## Niet initialiseren met een README, license, of `.gitignore` bestanden!
+
+Doe dit niet als je je nieuwe GitHub repo aanmaakt om fouten te voorkomen. Je kunt deze toevoegen nadat je project gepushed is.
+:::
+
+10. Kopieer de URL van de externe opslagplaats (bovenaan de pagina Snelle installatie) naar je klembord.
+
+```{r}
+#| echo: false
+knitr::include_graphics("media/GH_quick_setup.png")
+```
+
+11. Voeg in Terminal de URL toe voor het externe archief waar je lokale archief naartoe gepusht zal worden:
+
+```{bash}
+#| eval: false
+# stel de nieuwe remote in met de URL van je GitHub repo
+git remote add origin <REMOTE_URL>
+
+# controleer of de nieuwe URL op afstand correct is (dit drukt gewoon de URL af die je hebt toegevoegd)
+git remote -v
+```
+
+12. Push de wijzigingen in je lokale repository naar je remote repository op GitHub:
+
+```{bash}
+#| eval: false
+git push -u origin main
+```
+
+-   Als het lukt, zou je iets moeten zien dat lijkt op wat je hieronder ziet!
+
+```{bash}
+#| eval: false
+(base) Samanthas-MacBook-Air:mysite samanthacsik$ git push -u origin main
+Enumerating objects: 33, done.
+Counting objects: 100% (33/33), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (29/29), done.
+Writing objects: 100% (33/33), 273.20 KiB | 13.66 MiB/s, done.
+Total 33 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), done.
+To https://github.com/samanthacsik/mysite.git
+ * [new branch]      main -> main
+Branch 'main' set up to track remote branch 'main' from 'origin'.
+(base) Samanthas-MacBook-Air:mysite samanthacsik$ 
+```
+
+-   Ververs je GitHub repository (in je web browser) om te zien dat je updates succesvol gepushed zijn!
+
+{{< include /sections/NOTE.qmd >}}

@@ -1,0 +1,25 @@
+---
+format: html
+---
+
+## `r fontawesome::fa("forward", fill = "#5A5A5A", a11y = "sem")` Vooruit kijken
+
+Je zou nu een basisversie van je website moeten hebben 🎉 Tijdens het herfstkwartaal leren de studenten van Sam hoe ze:
+
+a\. [het uiterlijk van onze site aanpassen met Sass & CSS](https://ucsb-meds.github.io/customizing-quarto-websites/#/title-slide)
+
+b\. [een blog en blogberichten toevoegen aan onze websites](https://samanthacsik.github.io/posts/2022-10-24-quarto-blogs/) 
+
+c\. continu ontwikkelen van hun merk
+
+Tegelijkertijd, kijk naar [huidige student & alumni websites](https://ucsb-meds.github.io/student_websites.html) (**Noot:** MEDS klas van 2022 gebruikte [`{distill}`](https://rstudio.github.io/distill/website.html) pakket om hun websites te bouwen) voor inspiratie of duik in de [Quarto Website documentatie](https://quarto.org/docs/websites/) als je nu aan de slag wilt met verdere aanpassingen.
+
+## `r fontawesome::fa("star", fill = "#5A5A5A", a11y = "sem")` Extra bronnen om je enthousiast te maken over Quarto
+
+-   We don't talk about Quarto, door Alison Hill \| [`r fontawesome::fa("blog", fill = "#5A5A5A", a11y = "sem")` blog post](https://www.apreshill.com/blog/2022-04-we-dont-talk-about-quarto/)
+
+-   Reproducible Authoring with Quarto, door Mine Çetinkaya-Rundel \| [`r fontawesome::fa("desktop", fill = "#5A5A5A", a11y = "sem")` slides](https://mine-cetinkaya-rundel.github.io/2022-repro-toronto/#/title-slide) \| [`r fontawesome::fa("video", fill = "#5A5A5A", a11y = "sem")` recording](https://www.youtube.com/watch?v=6p4vOKS6Xls)
+
+-   Hello Quarto! A Chat with NASA Openscapes, Co-Hosted door R-Ladies Santa Barbara \| [`r fontawesome::fa("blog", fill = "#5A5A5A", a11y = "sem")` blog post](https://www.openscapes.org/blog/2022/06/22/hello-quarto/) \| [`r fontawesome::fa("video", fill = "#5A5A5A", a11y = "sem")` recording](https://www.youtube.com/watch?v=azVAl343CIU)
+
+-   rstudio::conf 2022 keynote, Hello Quarto, door Julie Lowndes and Mine Çetinkaya-Rundel \| [`r fontawesome::fa("video", fill = "#5A5A5A", a11y = "sem")` recording](https://www.rstudio.com/conference/2022/keynotes/collaborate-with-quarto/)

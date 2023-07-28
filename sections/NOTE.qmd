@@ -1,0 +1,18 @@
+---
+format: html
+---
+
+::: callout-important
+## Maak een Quarto website binnen een bestaande GitHub repository  
+
+De bovenstaande instructies volgen de **"maak eerst een lokaal R project (en initialiseer als een git repo) > maak als tweede een upstream remote repo (op GitHub)"** werkwijze. Als je echter al een remote GitHub repository hebt die je voor je website wilt gebruiken, kloon dan de GitHub repo, en voer het volgende commando in je terminal uit:
+
+
+
+```{bash}
+#| eval: false
+quarto create-project --type website
+```
+
+Dit voegt de standaard bestanden toe (`_quarto.yml`, `.gitignore`, `index.qmd`, `about.qmd`, `styles.css`) om aan de slag te gaan met je website. Je kunt deze aanpak ook gebruiken als je al een bestaande lokale directory met documenten of een R project hebt dat je wilt gebruiken als de directory voor je website. Navigeer eerst naar die directory/open dat R project en voer dan het bovenstaande commando uit in je terminal. 
+:::

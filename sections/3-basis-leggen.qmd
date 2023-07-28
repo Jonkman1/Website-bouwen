@@ -1,0 +1,23 @@
+---
+format: html
+---
+
+## `r fontawesome::fa("tools", fill = "#5A5A5A", a11y = "sem")` 3. Basis leggen voor jouw website
+
+::: callout-important
+## Voordat je begint...
+
+Om verder te gaan, is het volgende nodig:
+
+-   R & RStudio zijn geïnstalleerd (de laatste RStudio update vind je  [hier](https://www.rstudio.com/products/rstudio/download/#download))
+-   [Quarto](https://quarto.org/docs/get-started/) is geïnstalleerd -- **Vanaf RStudio v2022.07.1+ i.e. zit Quatro er automatisch in, geen aparte download is meer nodig**
+-   Een GitHub-account & jouw 'personal access token' (PAT) is opgeslagen
+-   Git is geïnstalleerd/geconfigureerd
+:::
+
+Dit document bespreekt twee manieren waar Quarto is te gebruiken om jouw website te bouwen.
+
+(1) `r fontawesome::fa("terminal", fill = "#5A5A5A", a11y = "sem")` Via de commandolijn\
+(2) `r fontawesome::fa("r-project", fill = "#5A5A5A", a11y = "sem")` Met gebruik van RStudio IDE
+
+De volgorde van handeling is net wat anders afhankelijk van de benadering die je kiest, maar de concepten blijven hetzelfde.
