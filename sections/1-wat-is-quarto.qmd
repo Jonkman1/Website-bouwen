@@ -12,11 +12,11 @@ R gebruikers zijn al lang gek op [RMarkdown](https://rmarkdown.rstudio.com/) voo
 #| echo: false
 #| fig-align: center
 #| fig-alt: "Een schema dat de meertalige input representeert (b.v. Python, R, Observable, Julia) naar meervoudige output (b.v. PDF, html, Word documents, and more) en de veelzijdigheid van Quarto laat zien."
-#knitr::include_graphics("media/quarto_schematic.png")
+knitr::include_graphics("media/quarto_schematic.png")
 ```
 
 ::: column-margin
-`r fontawesome::fa("palette", fill = "#5A5A5A", a11y = "sem")` Ontwerpt van [Allison Horst](https://twitter.com/allison_horst). Bekijk ook de rest van Allison's serieus en aardige Quarto pinguin ontwerpen in de #rstudioconf2022 keynote, [Hallo Quarto](https://mine.quarto.pub/hello-quarto/#/hello-quarto-title), van [Julie Lowndes](https://twitter.com/juliesquid) & [Mine Çetinkaya-Rundel](https://twitter.com/minebocek)!
+`r fontawesome::fa("palette", fill = "#5A5A5A", a11y = "sem")` Ontwerp van [Allison Horst](https://twitter.com/allison_horst). Bekijk ook de rest van Allison's serieus en aardige Quarto pinguin ontwerpen in de #rstudioconf2022 keynote, [Hallo Quarto](https://mine.quarto.pub/hello-quarto/#/hello-quarto-title), van [Julie Lowndes](https://twitter.com/juliesquid) & [Mine Çetinkaya-Rundel](https://twitter.com/minebocek)!
 :::
 
 Je kunt [Quarto's documentatie](https://quarto.org/docs/guide/) verder onderzoeke om meer te leren over het maken van documenten, websites, blogs, boeken, presentaties, etc.
